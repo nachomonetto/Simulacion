@@ -276,7 +276,7 @@ namespace Banco
                 if (dgv.Rows.Count==0)
                 {
                     //Reloj
-                    fila.Cells[0].Value = (float)0.00;
+                    fila.Cells[0].Value = 0;
 
                     //Evento
                     fila.Cells[1].Value = "Inicio";
@@ -693,22 +693,101 @@ namespace Banco
                     //Contador clientes con atención finalizada
                     fila.Cells[20].Value = (Convert.ToInt16(fila.Cells[13].Value) + Convert.ToInt16(fila.Cells[17].Value)).ToString();
 
-                    //Creo Clientes que van llegando
-                    if (pintar==valor1)
+                    //Que pasa con los clientes ante los distintos eventos
+                    if (pintar == valor1)
                     {
+                        if (Convert.ToInt16(filaAnterior.Cells[0].Value)==0)
+                        {
+
+                        }
+                        else
+                        {
+                            fila.Cells[dgv.Columns.Count - 2].Value = filaAnterior.Cells[dgv.Columns.Count - 2].Value;
+                            fila.Cells[dgv.Columns.Count - 1].Value = filaAnterior.Cells[dgv.Columns.Count - 1].Value;
+                        }
+
                         Cliente cliente = new Cliente();
                         cliente.Id = idCliente;
+                        idCliente = idCliente + 1;
                         //Creo columna de estado del nuevo cliente
                         DataGridViewColumn columna1 = new DataGridViewColumn();
                         columna1.HeaderText = "Estado cliente " + Convert.ToString(idCliente);
                         //Creo columna hora de llegada del nuevo cliente
                         DataGridViewColumn columna2 = new DataGridViewColumn();
                         columna1.HeaderText = "Hora de llegada cliente " + Convert.ToString(idCliente);
+                        //Agrego columnas efectivamente
+                        dgv.Columns.Add(columna1);
+                        dgv.Columns.Add(columna2);
+                        
 
-                        //citar al metodo estadoCliente
+                        //Seteo estado al nuevo cliente
+                        cliente.Estado = (estadoClienteQueLlega(Convert.ToString(filaAnterior.Cells[11].Value), Convert.ToString(filaAnterior.Cells[15]), Convert.ToInt16(filaAnterior.Cells[12].Value), Convert.ToInt16(filaAnterior.Cells[16]))).ToString();
+                        //Seteo la celda
+                        fila.Cells[dgv.Columns.Count - 2].Value = cliente.Estado;
+
+                        //Seteo hora de llegada del nuevo cliente
+                        cliente.HoraLlegada = Convert.ToDouble(fila.Cells[0].Value);
+                        //Seteo la celda
+                        fila.Cells[dgv.Columns.Count - 1].Value = (cliente.HoraLlegada).ToString();
 
                     }
+                    else
+                    {
+                        if (pintar==valor2)
+                        {
+                            double i = 9999999999999999999; //Para controlar quién pasa a ser atendido de los que estan esperando
+                            int indice=-1;
+                            //Actualizo el estado de cada cliente
+                            foreach (DataGridViewCell celda in filaAnterior.Cells)
+                            {
+                                if (Convert.ToString(celda.Value)== "Siendo atendido por el Cajero 1")
+                                {
+                                    fila.Cells[celda.ColumnIndex].Value = "Atencion finalizada";
+                                }
+                                if (Convert.ToString(celda.Value) == "Siendo atendido por el Cajero 2")
+                                {
+                                    fila.Cells[celda.ColumnIndex].Value = celda.Value;
+                                    fila.Cells[celda.ColumnIndex+1].Value = filaAnterior.Cells[celda.ColumnIndex+1].Value;
+                                }
+                                if (Convert.ToString(celda.Value) == "Esperando atencion del Cajero 1")
+                                {
+                                    
+                                    if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex+1].Value)<i)
+                                    {
+                                        i = Convert.ToInt16(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                                        indice = celda.ColumnIndex + 1;
+                                        //El cambio de estado lo tengo que hacer afuera del foreach, una verga
+                                    }
+                                    else
+                                    {
+                                        fila.Cells[celda.ColumnIndex].Value = "Esperando atencion del Cajero 1";
+                                        fila.Cells[celda.ColumnIndex+1].Value = filaAnterior.Cells[celda.ColumnIndex+1].Value;
+                                    }
 
+                                    
+                                }
+                                if (Convert.ToString(celda.Value) == "Esperando atencion del Cajero 2")
+                                {
+                                    fila.Cells[celda.ColumnIndex].Value = celda.Value;
+                                    fila.Cells[celda.ColumnIndex + 1].Value = filaAnterior.Cells[celda.ColumnIndex + 1].Value;
+                                }
+                            }
+                            if (indice!=-1)
+                            {
+                                fila.Cells[indice - 1].Value = "Siendo atendido por el Cajero 1";
+                                fila.Cells[indice].Value = filaAnterior.Cells[indice].Value;
+                            }
+                            
+
+                        }
+                        else //por acaaaaaaaaaaaaaaaaaa quedeeeeeeeeeeeeeeeeeeeee
+                        {
+                            //aca todo lo que pasa con los clientes si hay un fin de servicio del cajero 2, parecido al if anterior
+
+                        }
+                        
+                    }
+                  
                     controlReloj = Convert.ToDouble(fila.Cells[4].Value);
                 }
 
@@ -720,9 +799,6 @@ namespace Banco
 
                 //Insertamos nueva fila efectivamente
                 dgv.Rows.Add(fila);
-
-
-
 
             } while (tiempoAIterar>controlReloj);
 
@@ -824,31 +900,18 @@ namespace Banco
             {
                 if (aQueColaVa(colaAnteriorCajero1,colaAnteriorCajero2)==1)
                 {
-                    estadoCliente = "Esperando atención del Cajero 1";
+                    estadoCliente = "Esperando atencion del Cajero 1";
                 }
                 else
                 {
-                    estadoCliente = "Esperando atención del Cajero 2";
+                    estadoCliente = "Esperando atencion del Cajero 2";
                 }
                                 
             }
             return estadoCliente;
         }
 
-        //private void btnCajero1_Click(object sender, EventArgs e)
-        //{
-
-        //    double x = float.Parse(txtBoxMedia.Text, CultureInfo.CreateSpecificCulture("en-US"));
-        //    lblCajero1.Text = tiempoCajero1(x).ToString();
-        //    //lblCajero1.Text = tiempoCajero1(Convert.ToDouble(txtBoxMedia.Text)).ToString();
-        //}
-
-        //private void btnCajero2_Click(object sender, EventArgs e)
-        //{
-        //    double a = float.Parse(txtBoxA.Text, CultureInfo.CreateSpecificCulture("en-US"));
-        //    double b = float.Parse(txtBoxB.Text, CultureInfo.CreateSpecificCulture("en-US"));
-        //    lblCajero2.Text = tiempoCajero2(a, b).ToString();
-
-        //}
+        
+       
     }
 }
