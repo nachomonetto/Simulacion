@@ -17,6 +17,7 @@ namespace Banco
         public decimal randomLlegadas;
         public decimal randomFinAtencionCajero1;
         public decimal randomFinAtencionCajero2;
+        public int idCliente=1;
         public Form1()
         {
             InitializeComponent();
@@ -263,6 +264,9 @@ namespace Banco
             this.dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             dgv.AutoResizeColumns();
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgv.AllowUserToAddRows = false;
+            dgv.MultiSelect = false;
+            dgv.ReadOnly = true;
       
             do
             {
@@ -342,7 +346,7 @@ namespace Banco
                     //Creo variable row para ir viendo los valores de la última fila
                     DataGridViewRow filaAnterior = dgv.Rows[dgv.Rows.Count - 1];
 
-                    //Reloj
+                    //Reloj y verifico que evento sucede
                    
                     if (float.TryParse(Convert.ToString(filaAnterior.Cells[4].Value), out valor1))
                     {                   
@@ -578,63 +582,151 @@ namespace Banco
                             }
                         }
                     }
-                   
-                    //Por acaaaaaaaaaaaa meeeee quedeeeeeeeeeeeeeeeeeeeeeeeeee !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 
                     //Tiempo Atención Cajero 1
-                    fila.Cells[6].Value = "";
+
+                    if ((string)fila.Cells[5].Value=="")
+                    {
+                        fila.Cells[6].Value = "";
+
+                    }
+                    else
+                    {
+                        fila.Cells[6].Value = (tiempoCajero1(double.Parse(txtBoxMedia.Text))).ToString();
+                    }
 
                     //Fin Atención Cajero 1
-                    fila.Cells[7].Value = "";
+                    if (Convert.ToString(fila.Cells[5].Value) == "")
+                    {
+                        if (pintar == valor1 || pintar ==valor3)
+                        {
+                            fila.Cells[7].Value = filaAnterior.Cells[7].Value;
+                        }
+                        else
+                        {
+                            fila.Cells[7].Value = "";
+                        }
+
+                    }
+                    else
+                    {
+                        fila.Cells[7].Value = (Convert.ToDouble(fila.Cells[0].Value) + Convert.ToDouble(fila.Cells[6].Value)).ToString();
+                    }
+
 
                     //RND Atención Cajero 2
-                    fila.Cells[8].Value = "";
+                    //Controlado más arriba
 
                     //Tiempo Atención Cajero 2
-                    fila.Cells[9].Value = "";
+                    if ((string)fila.Cells[8].Value == "")
+                    {
+                        fila.Cells[9].Value = "";
+
+                    }
+                    else
+                    {
+                        fila.Cells[9].Value = (tiempoCajero2(double.Parse(txtBoxA.Text), double.Parse(txtBoxB.Text))).ToString();
+                    }
 
                     //Fin Atención Cajero 2
-                    fila.Cells[10].Value = "";
+                    if (Convert.ToString(fila.Cells[8].Value) == "")
+                    {
+                        if (pintar == valor1 || pintar == valor2)
+                        {
+                            fila.Cells[10].Value = filaAnterior.Cells[10].Value;
+                        }
+                        else
+                        {
+                            fila.Cells[10].Value = "";
+                        }
+
+                    }
+                    else
+                    {
+                        fila.Cells[10].Value = (Convert.ToDouble(fila.Cells[0].Value) + Convert.ToDouble(fila.Cells[9].Value)).ToString();
+                    }
 
                     //Estado Cajero 1
-                    fila.Cells[11].Value = "Libre";
+                    //Ya controlado más arriba
+
 
                     //Cola Cajero 1
-                    fila.Cells[12].Value = (decimal)0;
+                    //Ya controlado más arriba
 
                     //Contador Clientes con espera finalizada Cajero 1
-                    fila.Cells[13].Value = (decimal)0;
+                    if (pintar == valor2)
+                    {
+                        fila.Cells[13].Value = (contadorClientes(Convert.ToInt16(filaAnterior.Cells[13].Value))).ToString();
+                    }
+                    else
+                    {
+                        fila.Cells[13].Value = filaAnterior.Cells[13].Value;
+                    }
 
                     //Acumulador tiempo ocioso Cajero 1
-                    fila.Cells[14].Value = (decimal)0;
+                    fila.Cells[14].Value = (acumuladorOcio(Convert.ToString(filaAnterior.Cells[11]), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[14].Value))).ToString();
 
                     //Estado Cajero 2
-                    fila.Cells[15].Value = "Libre";
+                    //ya controlado más arriba
 
                     //Cola Cajero 2
-                    fila.Cells[16].Value = (decimal)0;
+                    //ya controlado más arriba
 
                     //Contador Clientes con espera finalizada Cajero 2
-                    fila.Cells[17].Value = (decimal)0;
+                    if (pintar == valor3)
+                    {
+                        fila.Cells[17].Value = (contadorClientes(Convert.ToInt16(filaAnterior.Cells[17].Value))).ToString();
+                    }
+                    else
+                    {
+                        fila.Cells[17].Value = filaAnterior.Cells[17].Value;
+                    }
 
                     //Acumulador tiempo ocioso Cajero 2
-                    fila.Cells[18].Value = (decimal)0;
+                    fila.Cells[18].Value = (acumuladorOcio(Convert.ToString(filaAnterior.Cells[15]), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[18].Value))).ToString();
 
                     //Acumulador Tiempo clientes en el banco (tiempo en el sistema)
-                    fila.Cells[19].Value = (decimal)0;
+                    fila.Cells[19].Value = (decimal)0; //yyyyy acaaaaaaaaaaa queee ondaaaaa losss clientessssssssss
 
                     //Contador clientes con atención finalizada
-                    fila.Cells[20].Value = (decimal)0;
+                    fila.Cells[20].Value = (Convert.ToInt16(fila.Cells[13].Value) + Convert.ToInt16(fila.Cells[17].Value)).ToString();
+
+                    //Creo Clientes que van llegando
+                    if (pintar==valor1)
+                    {
+                        Cliente cliente = new Cliente();
+                        cliente.Id = idCliente;
+                        //Creo columna de estado del nuevo cliente
+                        DataGridViewColumn columna1 = new DataGridViewColumn();
+                        columna1.HeaderText = "Estado cliente " + Convert.ToString(idCliente);
+                        //Creo columna hora de llegada del nuevo cliente
+                        DataGridViewColumn columna2 = new DataGridViewColumn();
+                        columna1.HeaderText = "Hora de llegada cliente " + Convert.ToString(idCliente);
+
+                        //citar al metodo estadoCliente
+
+                    }
 
                     controlReloj = Convert.ToDouble(fila.Cells[4].Value);
                 }
-                
+
+                //saco el botón de la cabecera de cada columna que permitía ordenar
+                for (int i = 0; i < dgv.Columns.Count - 1; i++)
+                {
+                    dgv.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
+                //Insertamos nueva fila efectivamente
                 dgv.Rows.Add(fila);
 
 
 
 
             } while (tiempoAIterar>controlReloj);
+
+            idCliente = 1;
 
         }
 
@@ -694,6 +786,54 @@ namespace Banco
             }
         }
         
+        int contadorClientes(int clientes)
+        {
+            int incrementar = clientes + 1;
+            return incrementar;
+        }
+
+        double acumuladorOcio(string estadoAnterior, double relojActual, double relojAnterior, double ocioAnterior)
+        {
+            double resultado;
+            if (estadoAnterior=="Libre")
+            {
+                resultado = ocioAnterior + (relojActual - relojAnterior);
+            }
+            else
+            {
+                resultado = ocioAnterior;
+            }
+
+            return resultado;
+        }
+        string estadoClienteQueLlega(string estadoAnteriorCajero1, string estadoAnteriorCajero2, int colaAnteriorCajero1, int colaAnteriorCajero2)
+        {
+            string estadoCliente;
+            if (estadoAnteriorCajero1=="Libre" || estadoAnteriorCajero2=="Libre")
+            {
+                if (estadoAnteriorCajero1=="Libre")
+                {
+                    estadoCliente = "Siendo atendido por el Cajero 1";
+                }
+                else
+                {
+                    estadoCliente = "Siendo atendido por el Cajero 2";
+                }
+            }
+            else //los dos cajeros ocupados
+            {
+                if (aQueColaVa(colaAnteriorCajero1,colaAnteriorCajero2)==1)
+                {
+                    estadoCliente = "Esperando atención del Cajero 1";
+                }
+                else
+                {
+                    estadoCliente = "Esperando atención del Cajero 2";
+                }
+                                
+            }
+            return estadoCliente;
+        }
 
         //private void btnCajero1_Click(object sender, EventArgs e)
         //{
