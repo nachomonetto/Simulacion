@@ -45,6 +45,32 @@
             this.txtBoxB = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.txtBoxMedia = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtBoxSimular = new System.Windows.Forms.TextBox();
+            this.btnSimular = new System.Windows.Forms.Button();
+            this.dgv = new System.Windows.Forms.DataGridView();
+            this.reloj = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.evento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rndLlegadas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tiempoLlegadas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.proximaLlegada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rndAtencionCajero1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tiempoAtencionCajero1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.finAtencionCajero1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rndAtencionCajero2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tiempoAtencionCajero2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.finAtencionCajero2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estadoCajero1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colaCajero1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contadorClientesCajero1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.acumuladorTiempoOciosoCajero1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.estadoCajero2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colaCajero2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contadorClientesCajero2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.acumuladorTiempoOciosoCajero2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.acumuladorTiempoClienteEnSistema = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contadorClientesConFinAtencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -204,11 +230,224 @@
             this.txtBoxMedia.TextChanged += new System.EventHandler(this.txtBoxMedia_TextChanged);
             this.txtBoxMedia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxMedia_KeyPress);
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(12, 185);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(121, 13);
+            this.label14.TabIndex = 17;
+            this.label14.Text = "Simular hasta el minuto: ";
+            // 
+            // txtBoxSimular
+            // 
+            this.txtBoxSimular.Location = new System.Drawing.Point(128, 182);
+            this.txtBoxSimular.Name = "txtBoxSimular";
+            this.txtBoxSimular.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxSimular.TabIndex = 18;
+            this.txtBoxSimular.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxSimular_KeyPress);
+            // 
+            // btnSimular
+            // 
+            this.btnSimular.Location = new System.Drawing.Point(234, 180);
+            this.btnSimular.Name = "btnSimular";
+            this.btnSimular.Size = new System.Drawing.Size(75, 23);
+            this.btnSimular.TabIndex = 19;
+            this.btnSimular.Text = "Simular";
+            this.btnSimular.UseVisualStyleBackColor = true;
+            this.btnSimular.Click += new System.EventHandler(this.btnSimular_Click);
+            // 
+            // dgv
+            // 
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AllowUserToDeleteRows = false;
+            this.dgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgv.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.reloj,
+            this.evento,
+            this.rndLlegadas,
+            this.tiempoLlegadas,
+            this.proximaLlegada,
+            this.rndAtencionCajero1,
+            this.tiempoAtencionCajero1,
+            this.finAtencionCajero1,
+            this.rndAtencionCajero2,
+            this.tiempoAtencionCajero2,
+            this.finAtencionCajero2,
+            this.estadoCajero1,
+            this.colaCajero1,
+            this.contadorClientesCajero1,
+            this.acumuladorTiempoOciosoCajero1,
+            this.estadoCajero2,
+            this.colaCajero2,
+            this.contadorClientesCajero2,
+            this.acumuladorTiempoOciosoCajero2,
+            this.acumuladorTiempoClienteEnSistema,
+            this.contadorClientesConFinAtencion});
+            this.dgv.Location = new System.Drawing.Point(15, 218);
+            this.dgv.Name = "dgv";
+            this.dgv.ReadOnly = true;
+            this.dgv.Size = new System.Drawing.Size(1343, 150);
+            this.dgv.TabIndex = 20;
+            // 
+            // reloj
+            // 
+            this.reloj.HeaderText = "Reloj";
+            this.reloj.Name = "reloj";
+            this.reloj.ReadOnly = true;
+            this.reloj.Width = 56;
+            // 
+            // evento
+            // 
+            this.evento.HeaderText = "Evento";
+            this.evento.Name = "evento";
+            this.evento.ReadOnly = true;
+            this.evento.Width = 66;
+            // 
+            // rndLlegadas
+            // 
+            this.rndLlegadas.HeaderText = "RND";
+            this.rndLlegadas.Name = "rndLlegadas";
+            this.rndLlegadas.ReadOnly = true;
+            this.rndLlegadas.Width = 56;
+            // 
+            // tiempoLlegadas
+            // 
+            this.tiempoLlegadas.HeaderText = "Tiempo entre llegadas";
+            this.tiempoLlegadas.Name = "tiempoLlegadas";
+            this.tiempoLlegadas.ReadOnly = true;
+            this.tiempoLlegadas.Width = 124;
+            // 
+            // proximaLlegada
+            // 
+            this.proximaLlegada.HeaderText = "Próxima llegada";
+            this.proximaLlegada.Name = "proximaLlegada";
+            this.proximaLlegada.ReadOnly = true;
+            this.proximaLlegada.Width = 97;
+            // 
+            // rndAtencionCajero1
+            // 
+            this.rndAtencionCajero1.HeaderText = "RND";
+            this.rndAtencionCajero1.Name = "rndAtencionCajero1";
+            this.rndAtencionCajero1.ReadOnly = true;
+            this.rndAtencionCajero1.Width = 56;
+            // 
+            // tiempoAtencionCajero1
+            // 
+            this.tiempoAtencionCajero1.HeaderText = "Tiempo de atención Cajero 1";
+            this.tiempoAtencionCajero1.Name = "tiempoAtencionCajero1";
+            this.tiempoAtencionCajero1.ReadOnly = true;
+            this.tiempoAtencionCajero1.Width = 118;
+            // 
+            // finAtencionCajero1
+            // 
+            this.finAtencionCajero1.HeaderText = "Fin de atención Cajero 1";
+            this.finAtencionCajero1.Name = "finAtencionCajero1";
+            this.finAtencionCajero1.ReadOnly = true;
+            this.finAtencionCajero1.Width = 134;
+            // 
+            // rndAtencionCajero2
+            // 
+            this.rndAtencionCajero2.HeaderText = "RND";
+            this.rndAtencionCajero2.Name = "rndAtencionCajero2";
+            this.rndAtencionCajero2.ReadOnly = true;
+            this.rndAtencionCajero2.Width = 56;
+            // 
+            // tiempoAtencionCajero2
+            // 
+            this.tiempoAtencionCajero2.HeaderText = "Tiempo de atención Cajero 2";
+            this.tiempoAtencionCajero2.Name = "tiempoAtencionCajero2";
+            this.tiempoAtencionCajero2.ReadOnly = true;
+            this.tiempoAtencionCajero2.Width = 118;
+            // 
+            // finAtencionCajero2
+            // 
+            this.finAtencionCajero2.HeaderText = "Fin de atención Cajero 2";
+            this.finAtencionCajero2.Name = "finAtencionCajero2";
+            this.finAtencionCajero2.ReadOnly = true;
+            this.finAtencionCajero2.Width = 134;
+            // 
+            // estadoCajero1
+            // 
+            this.estadoCajero1.HeaderText = "Estado Cajero 1";
+            this.estadoCajero1.Name = "estadoCajero1";
+            this.estadoCajero1.ReadOnly = true;
+            this.estadoCajero1.Width = 90;
+            // 
+            // colaCajero1
+            // 
+            this.colaCajero1.HeaderText = "Cola Cajero 1";
+            this.colaCajero1.Name = "colaCajero1";
+            this.colaCajero1.ReadOnly = true;
+            this.colaCajero1.Width = 79;
+            // 
+            // contadorClientesCajero1
+            // 
+            this.contadorClientesCajero1.HeaderText = "Contador de clientes Cajero 1";
+            this.contadorClientesCajero1.Name = "contadorClientesCajero1";
+            this.contadorClientesCajero1.ReadOnly = true;
+            this.contadorClientesCajero1.Width = 121;
+            // 
+            // acumuladorTiempoOciosoCajero1
+            // 
+            this.acumuladorTiempoOciosoCajero1.HeaderText = "Acumulador de tiempo ocioso Cajero 1";
+            this.acumuladorTiempoOciosoCajero1.Name = "acumuladorTiempoOciosoCajero1";
+            this.acumuladorTiempoOciosoCajero1.ReadOnly = true;
+            this.acumuladorTiempoOciosoCajero1.Width = 159;
+            // 
+            // estadoCajero2
+            // 
+            this.estadoCajero2.HeaderText = "Estado Cajero 2";
+            this.estadoCajero2.Name = "estadoCajero2";
+            this.estadoCajero2.ReadOnly = true;
+            this.estadoCajero2.Width = 90;
+            // 
+            // colaCajero2
+            // 
+            this.colaCajero2.HeaderText = "Cola Cajero 2";
+            this.colaCajero2.Name = "colaCajero2";
+            this.colaCajero2.ReadOnly = true;
+            this.colaCajero2.Width = 79;
+            // 
+            // contadorClientesCajero2
+            // 
+            this.contadorClientesCajero2.HeaderText = "Contador de clientes Cajero 2";
+            this.contadorClientesCajero2.Name = "contadorClientesCajero2";
+            this.contadorClientesCajero2.ReadOnly = true;
+            this.contadorClientesCajero2.Width = 121;
+            // 
+            // acumuladorTiempoOciosoCajero2
+            // 
+            this.acumuladorTiempoOciosoCajero2.HeaderText = "Acumulador de tiempo ocioso Cajero 2";
+            this.acumuladorTiempoOciosoCajero2.Name = "acumuladorTiempoOciosoCajero2";
+            this.acumuladorTiempoOciosoCajero2.ReadOnly = true;
+            this.acumuladorTiempoOciosoCajero2.Width = 159;
+            // 
+            // acumuladorTiempoClienteEnSistema
+            // 
+            this.acumuladorTiempoClienteEnSistema.HeaderText = "Acumulador de tiempo de clientes en banco";
+            this.acumuladorTiempoClienteEnSistema.Name = "acumuladorTiempoClienteEnSistema";
+            this.acumuladorTiempoClienteEnSistema.ReadOnly = true;
+            this.acumuladorTiempoClienteEnSistema.Width = 141;
+            // 
+            // contadorClientesConFinAtencion
+            // 
+            this.contadorClientesConFinAtencion.HeaderText = "Contador de clientes con atención finalizada";
+            this.contadorClientesConFinAtencion.Name = "contadorClientesConFinAtencion";
+            this.contadorClientesConFinAtencion.ReadOnly = true;
+            this.contadorClientesConFinAtencion.Width = 179;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 338);
+            this.ClientSize = new System.Drawing.Size(1370, 338);
+            this.Controls.Add(this.dgv);
+            this.Controls.Add(this.btnSimular);
+            this.Controls.Add(this.txtBoxSimular);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.txtBoxMedia);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtBoxB);
@@ -228,6 +467,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,6 +492,31 @@
         private System.Windows.Forms.TextBox txtBoxB;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtBoxMedia;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtBoxSimular;
+        private System.Windows.Forms.Button btnSimular;
+        private System.Windows.Forms.DataGridView dgv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn reloj;
+        private System.Windows.Forms.DataGridViewTextBoxColumn evento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rndLlegadas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tiempoLlegadas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn proximaLlegada;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rndAtencionCajero1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tiempoAtencionCajero1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn finAtencionCajero1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rndAtencionCajero2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tiempoAtencionCajero2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn finAtencionCajero2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn estadoCajero1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colaCajero1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn contadorClientesCajero1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn acumuladorTiempoOciosoCajero1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn estadoCajero2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colaCajero2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn contadorClientesCajero2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn acumuladorTiempoOciosoCajero2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn acumuladorTiempoClienteEnSistema;
+        private System.Windows.Forms.DataGridViewTextBoxColumn contadorClientesConFinAtencion;
     }
 }
 
