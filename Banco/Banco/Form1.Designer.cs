@@ -70,6 +70,17 @@
             this.acumuladorTiempoOciosoCajero2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.acumuladorTiempoClienteEnSistema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contadorClientesConFinAtencion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.lblEstadisticaACajero1 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.lblEstadisticaACajero2 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.lblEstadisticaB = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.asda = new System.Windows.Forms.Label();
+            this.lblEstadisticaCCajero1 = new System.Windows.Forms.Label();
+            this.lblEstadisticaCCajero2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -286,7 +297,7 @@
             this.acumuladorTiempoOciosoCajero2,
             this.acumuladorTiempoClienteEnSistema,
             this.contadorClientesConFinAtencion});
-            this.dgv.Location = new System.Drawing.Point(15, 218);
+            this.dgv.Location = new System.Drawing.Point(12, 433);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.Size = new System.Drawing.Size(1343, 150);
@@ -439,11 +450,127 @@
             this.contadorClientesConFinAtencion.ReadOnly = true;
             this.contadorClientesConFinAtencion.Width = 179;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.label15.Location = new System.Drawing.Point(7, 237);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(116, 25);
+            this.label15.TabIndex = 21;
+            this.label15.Text = "Estadísticas";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label16.Location = new System.Drawing.Point(12, 277);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(283, 17);
+            this.label16.TabIndex = 22;
+            this.label16.Text = "Clientes atendidos por hora por el Cajero 1:";
+            // 
+            // lblEstadisticaACajero1
+            // 
+            this.lblEstadisticaACajero1.AutoSize = true;
+            this.lblEstadisticaACajero1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblEstadisticaACajero1.Location = new System.Drawing.Point(301, 277);
+            this.lblEstadisticaACajero1.Name = "lblEstadisticaACajero1";
+            this.lblEstadisticaACajero1.Size = new System.Drawing.Size(0, 17);
+            this.lblEstadisticaACajero1.TabIndex = 23;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label17.Location = new System.Drawing.Point(12, 294);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(283, 17);
+            this.label17.TabIndex = 24;
+            this.label17.Text = "Clientes atendidos por hora por el Cajero 2:";
+            // 
+            // lblEstadisticaACajero2
+            // 
+            this.lblEstadisticaACajero2.AutoSize = true;
+            this.lblEstadisticaACajero2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblEstadisticaACajero2.Location = new System.Drawing.Point(301, 294);
+            this.lblEstadisticaACajero2.Name = "lblEstadisticaACajero2";
+            this.lblEstadisticaACajero2.Size = new System.Drawing.Size(0, 17);
+            this.lblEstadisticaACajero2.TabIndex = 25;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label18.Location = new System.Drawing.Point(12, 323);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(285, 17);
+            this.label18.TabIndex = 26;
+            this.label18.Text = "Tiempo promedio de un cliente en el banco:";
+            // 
+            // lblEstadisticaB
+            // 
+            this.lblEstadisticaB.AutoSize = true;
+            this.lblEstadisticaB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblEstadisticaB.Location = new System.Drawing.Point(301, 323);
+            this.lblEstadisticaB.Name = "lblEstadisticaB";
+            this.lblEstadisticaB.Size = new System.Drawing.Size(0, 17);
+            this.lblEstadisticaB.TabIndex = 27;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label19.Location = new System.Drawing.Point(12, 354);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(184, 17);
+            this.label19.TabIndex = 28;
+            this.label19.Text = "Tiempo ocioso del Cajero 1:";
+            // 
+            // asda
+            // 
+            this.asda.AutoSize = true;
+            this.asda.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.asda.Location = new System.Drawing.Point(12, 371);
+            this.asda.Name = "asda";
+            this.asda.Size = new System.Drawing.Size(184, 17);
+            this.asda.TabIndex = 29;
+            this.asda.Text = "Tiempo ocioso del Cajero 2:";
+            // 
+            // lblEstadisticaCCajero1
+            // 
+            this.lblEstadisticaCCajero1.AutoSize = true;
+            this.lblEstadisticaCCajero1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblEstadisticaCCajero1.Location = new System.Drawing.Point(191, 354);
+            this.lblEstadisticaCCajero1.Name = "lblEstadisticaCCajero1";
+            this.lblEstadisticaCCajero1.Size = new System.Drawing.Size(0, 17);
+            this.lblEstadisticaCCajero1.TabIndex = 30;
+            // 
+            // lblEstadisticaCCajero2
+            // 
+            this.lblEstadisticaCCajero2.AutoSize = true;
+            this.lblEstadisticaCCajero2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblEstadisticaCCajero2.Location = new System.Drawing.Point(191, 371);
+            this.lblEstadisticaCCajero2.Name = "lblEstadisticaCCajero2";
+            this.lblEstadisticaCCajero2.Size = new System.Drawing.Size(0, 17);
+            this.lblEstadisticaCCajero2.TabIndex = 31;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 338);
+            this.ClientSize = new System.Drawing.Size(1370, 487);
+            this.Controls.Add(this.lblEstadisticaCCajero2);
+            this.Controls.Add(this.lblEstadisticaCCajero1);
+            this.Controls.Add(this.asda);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.lblEstadisticaB);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.lblEstadisticaACajero2);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.lblEstadisticaACajero1);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.dgv);
             this.Controls.Add(this.btnSimular);
             this.Controls.Add(this.txtBoxSimular);
@@ -517,6 +644,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn acumuladorTiempoOciosoCajero2;
         private System.Windows.Forms.DataGridViewTextBoxColumn acumuladorTiempoClienteEnSistema;
         private System.Windows.Forms.DataGridViewTextBoxColumn contadorClientesConFinAtencion;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblEstadisticaACajero1;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label lblEstadisticaACajero2;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label lblEstadisticaB;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label asda;
+        private System.Windows.Forms.Label lblEstadisticaCCajero1;
+        private System.Windows.Forms.Label lblEstadisticaCCajero2;
     }
 }
 
