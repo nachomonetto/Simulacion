@@ -19,6 +19,18 @@ namespace Banco
         {
             InitializeComponent();
             dgv.Visible = false;
+
+            //DataGridViewColumn columnaRndMontecarlo = new DataGridViewColumn();
+            //columnaRndMontecarlo.HeaderText = ("RND Montecarlo");
+            //columnaRndMontecarlo.Name = ("columnaRndMontecarlo");
+            //columnaRndMontecarlo.CellTemplate = new DataGridViewRowHeaderCell();
+            //DataGridViewColumn columnaADonde = new DataGridViewColumn();
+            //columnaADonde.HeaderText = ("A donde va?");
+            //columnaRndMontecarlo.Name = ("columnaADonde");
+            //columnaRndMontecarlo.CellTemplate = new DataGridViewRowHeaderCell();
+
+            //dgv.Columns.Insert(5, columnaRndMontecarlo);
+            //dgv.Columns.Insert(6, columnaADonde);
         }
 
         private void txtBoxFrecuencia_KeyPress(object sender, KeyPressEventArgs e) 
@@ -209,6 +221,7 @@ namespace Banco
         public decimal variable2;
         public decimal variable3;
         public decimal comparar;
+        public decimal montecarlo;
         private void btnSimular_Click(object sender, EventArgs e)
         {
             
@@ -239,7 +252,8 @@ namespace Banco
 
                     //RND llegadas
                     //randomLlegadas = guardarRandom();
-                    fila.Cells[2].Value = guardarRandom().ToString();
+                    fila.Cells[2].Value = guardarRandom1().ToString();
+                    
 
                     //Tiempo entre llegadas
                     fila.Cells[3].Value = tiempoEntreLlegadas(int.Parse(txtBoxFrecuencia.Text), Convert.ToDouble(fila.Cells[2].Value)).ToString();
@@ -247,53 +261,57 @@ namespace Banco
                     //Próxima Llegada
                     fila.Cells[4].Value = (Convert.ToDecimal(fila.Cells[0].Value) + Convert.ToDecimal(fila.Cells[3].Value)).ToString();
 
-                    //RND Atención Cajero 1
+                    //Random Montecarlo
                     fila.Cells[5].Value = "";
-
-                    //Tiempo Atención Cajero 1
+                    //A donde va?
                     fila.Cells[6].Value = "";
-
-                    //Fin Atención Cajero 1
+                    //RND Atención Cajero 1
                     fila.Cells[7].Value = "";
 
-                    //RND Atención Cajero 2
+                    //Tiempo Atención Cajero 1
                     fila.Cells[8].Value = "";
 
-                    //Tiempo Atención Cajero 2
+                    //Fin Atención Cajero 1
                     fila.Cells[9].Value = "";
 
-                    //Fin Atención Cajero 2
+                    //RND Atención Cajero 2
                     fila.Cells[10].Value = "";
 
+                    //Tiempo Atención Cajero 2
+                    fila.Cells[11].Value = "";
+
+                    //Fin Atención Cajero 2
+                    fila.Cells[12].Value = "";
+
                     //Estado Cajero 1
-                    fila.Cells[11].Value = "Libre";
+                    fila.Cells[13].Value = "Libre";
 
                     //Cola Cajero 1
-                    fila.Cells[12].Value = 0.ToString();
-
-                    //Contador Clientes con espera finalizada Cajero 1
-                    fila.Cells[13].Value = 0.ToString();
-
-                    //Acumulador tiempo ocioso Cajero 1
                     fila.Cells[14].Value = 0.ToString();
 
-                    //Estado Cajero 2
-                    fila.Cells[15].Value = "Libre";
+                    //Contador Clientes con espera finalizada Cajero 1
+                    fila.Cells[15].Value = 0.ToString();
 
-                    //Cola Cajero 2
+                    //Acumulador tiempo ocioso Cajero 1
                     fila.Cells[16].Value = 0.ToString();
 
-                    //Contador Clientes con espera finalizada Cajero 2
-                    fila.Cells[17].Value = 0.ToString();
+                    //Estado Cajero 2
+                    fila.Cells[17].Value = "Libre";
 
-                    //Acumulador tiempo ocioso Cajero 2
+                    //Cola Cajero 2
                     fila.Cells[18].Value = 0.ToString();
 
-                    //Acumulador Tiempo clientes en el banco (tiempo en el sistema)
+                    //Contador Clientes con espera finalizada Cajero 2
                     fila.Cells[19].Value = 0.ToString();
 
-                    //Contador clientes con atención finalizada
+                    //Acumulador tiempo ocioso Cajero 2
                     fila.Cells[20].Value = 0.ToString();
+
+                    //Acumulador Tiempo clientes en el banco (tiempo en el sistema)
+                    fila.Cells[21].Value = 0.ToString();
+
+                    //Contador clientes con atención finalizada
+                    fila.Cells[22].Value = 0.ToString();
 
                     
                 }
@@ -313,7 +331,7 @@ namespace Banco
                     {
                         valor1 = 9999999999999999999;
                     }
-                    if (float.TryParse(Convert.ToString(filaAnterior.Cells[7].Value), out valor2))
+                    if (float.TryParse(Convert.ToString(filaAnterior.Cells[9].Value), out valor2))
                     {
 
                     }
@@ -321,7 +339,7 @@ namespace Banco
                     {
                         valor2 = 9999999999999999999;
                     }
-                    if (float.TryParse(Convert.ToString(filaAnterior.Cells[10].Value), out valor3))
+                    if (float.TryParse(Convert.ToString(filaAnterior.Cells[12].Value), out valor3))
                     {
 
                     }
@@ -337,18 +355,30 @@ namespace Banco
                     {
                         filaAnterior.Cells[4].Style.BackColor = Color.LightSkyBlue;
                         fila.Cells[1].Value = "Llegada de Cliente"; //Columna evento
+                        //RandomMontecarlo               
+                       // if (muestroRandom(Convert.ToString(filaAnterior.Cells[13].Value), Convert.ToString(filaAnterior.Cells[17].Value), Convert.ToInt16(filaAnterior.Cells[14].Value), Convert.ToInt16(filaAnterior.Cells[18].Value)))
+                        //{
+                            fila.Cells[5].Value = Convert.ToString(rndMontecarlo());
+                        //}                             
+                        
+                        //A donde va?
+                        //fila.Cells[6].Value = aDonde(Convert.ToDecimal(fila.Cells[5].Value));
                     }
                     else
                     {
                         if (pintar == valor2)
                         {
-                            filaAnterior.Cells[7].Style.BackColor = Color.LightSkyBlue;
+                            filaAnterior.Cells[9].Style.BackColor = Color.LightSkyBlue;
                             fila.Cells[1].Value = "Fin de Atención Cajero 1"; //Columna evento
+                            fila.Cells[5].Value = "";
+                            fila.Cells[6].Value = "";
                         }
                         else
                         {
-                            filaAnterior.Cells[10].Style.BackColor = Color.LightSkyBlue;
+                            filaAnterior.Cells[12].Style.BackColor = Color.LightSkyBlue;
                             fila.Cells[1].Value = "Fin de Atención Cajero 2"; //Columna evento
+                            fila.Cells[5].Value = "";
+                            fila.Cells[6].Value = "";
                         }
                     }
 
@@ -356,7 +386,7 @@ namespace Banco
                     if (pintar == valor1)
                     {
                         //randomLlegadas = guardarRandom();
-                        fila.Cells[2].Value = guardarRandom().ToString();
+                        fila.Cells[2].Value = guardarRandom1().ToString();
 
                     }
                     else
@@ -412,128 +442,143 @@ namespace Banco
                     //Colas
                     if (pintar == valor1)
                     {
-                        if (Convert.ToString(filaAnterior.Cells[11].Value) == "Libre" && Convert.ToString(filaAnterior.Cells[15].Value) == "Libre")
+                        if (Convert.ToString(filaAnterior.Cells[13].Value) == "Libre" && Convert.ToString(filaAnterior.Cells[17].Value) == "Libre")
                         {
-                            /*randomFinAtencionCajero1 = guardarRandom();*/ //Se genera un fin de atención ya que están los 2 libres
-                            fila.Cells[5].Value = guardarRandom().ToString(); //Va al Cajero 1 por defecto
-                            fila.Cells[8].Value = ""; //No pasa nada con el Cajero 2
 
-                            fila.Cells[11].Value = "Ocupado"; //Cajero 1
-                            fila.Cells[12].Value = 0.ToString();
-
-                            fila.Cells[15].Value = "Libre"; //Cajero 2
-                            fila.Cells[16].Value = 0.ToString();
-                        }
-                        else
-                        {
-                            if (Convert.ToString(filaAnterior.Cells[11].Value) == "Libre")
+                            if (rndMontecarlo() < (decimal)0.5)
                             {
-                                //randomFinAtencionCajero1 = guardarRandom();
-                                fila.Cells[5].Value = guardarRandom().ToString(); //Lo mando al Cajero 1
-                                fila.Cells[8].Value = ""; //No pasa nada con el Cajero 2
+                                fila.Cells[7].Value = guardarRandom2().ToString(); //Va al Cajero 1 porque el rndMontecarlo es menor a 0.5
+                                fila.Cells[6].Value = "Cajero1";
+                                fila.Cells[10].Value = ""; //No pasa nada con el Cajero 2
 
-                                fila.Cells[11].Value = "Ocupado";
-                                fila.Cells[12].Value = 0.ToString();
+                                fila.Cells[13].Value = "Ocupado"; //Cajero 1
+                                fila.Cells[14].Value = 0.ToString();
 
-                                fila.Cells[15].Value = filaAnterior.Cells[15].Value.ToString(); //Cajero 2 como estaba
-                                fila.Cells[16].Value = filaAnterior.Cells[16].Value.ToString();
+                                fila.Cells[17].Value = "Libre"; //Cajero 2
+                                fila.Cells[18].Value = 0.ToString();
                             }
                             else
                             {
-                                if (Convert.ToString(filaAnterior.Cells[15].Value) == "Libre")
-                                {
-                                    //randomFinAtencionCajero2 = guardarRandom();
-                                    fila.Cells[8].Value = guardarRandom().ToString(); //Va al Cajero 2 ya que está ocupado el 1
-                                    fila.Cells[5].Value = ""; //No pasa nada con el Cajero 1
 
-                                    fila.Cells[15].Value = "Ocupado";
-                                    fila.Cells[16].Value = 0.ToString();
+                                fila.Cells[10].Value = guardarRandom3().ToString(); //Va al Cajero 2 porque el rndMontecarlo es mayor o igual a 0.5
+                                fila.Cells[6].Value = "Cajero2";
+                                fila.Cells[7].Value = ""; //No pasa nada con el Cajero 1
 
-                                    fila.Cells[11].Value = filaAnterior.Cells[11].Value.ToString(); //Cajero 1 como estaba
-                                    fila.Cells[12].Value = filaAnterior.Cells[12].Value.ToString();
+                                fila.Cells[17].Value = "Ocupado";
+                                fila.Cells[18].Value = 0.ToString();
 
-                                }
-                                else //los dos Cajeros Ocupados
-                                {
-                                    fila.Cells[5].Value = ""; //No pasa nada con los Random fin de atencion porque no se genera fin de atención
-                                    fila.Cells[8].Value = "";
-
-                                    fila.Cells[11].Value = "Ocupado"; //Se mantienen ocupados los Cajeros
-                                    fila.Cells[15].Value = "Ocupado";
-
-                                    cola1 = Convert.ToInt16(filaAnterior.Cells[12].Value.ToString());
-                                    cola2 = Convert.ToInt16(filaAnterior.Cells[16].Value.ToString());
-                                    if (aQueColaVa(cola1, cola2) == 1)
-                                    {
-                                        fila.Cells[12].Value = incrementarCola(cola1).ToString();//va al Cajero 1, incrementa cola
-                                        fila.Cells[16].Value = filaAnterior.Cells[16].Value.ToString(); //Cola del Cajero 2 como estaba
-
-                                    }
-                                    else
-                                    {
-                                        fila.Cells[16].Value = incrementarCola(cola2).ToString(); //va al Cajero 2, incrementa cola
-                                        fila.Cells[12].Value = filaAnterior.Cells[12].Value.ToString(); //Cola del Cajero 1 como estaba
-                                    }
-                                }
+                                fila.Cells[13].Value = "Libre"; //Cajero 1 como estaba
+                                fila.Cells[14].Value = 0.ToString();
                             }
+
                         }
+                        if (Convert.ToString(filaAnterior.Cells[13].Value) == "Libre" && Convert.ToString(filaAnterior.Cells[17].Value) == "Ocupado")
+                        {
+
+                            fila.Cells[7].Value = guardarRandom2().ToString(); //Lo mando al Cajero 1 porque está libre
+                            fila.Cells[6].Value = "Cajero1";
+                            fila.Cells[10].Value = ""; //No pasa nada con el Cajero 2
+
+                            fila.Cells[13].Value = "Ocupado";
+                            fila.Cells[14].Value = 0.ToString();
+
+                            fila.Cells[17].Value = filaAnterior.Cells[17].Value.ToString(); //Cajero 2 como estaba
+                            fila.Cells[18].Value = filaAnterior.Cells[18].Value.ToString();
+                        }
+                        if (Convert.ToString(filaAnterior.Cells[13].Value) == "Ocupado" && Convert.ToString(filaAnterior.Cells[17].Value) == "Libre")
+                        {
+
+                            fila.Cells[10].Value = guardarRandom3().ToString(); //Va al Cajero 2 ya que está ocupado el 1
+                            fila.Cells[6].Value = "Cajero2";
+                            fila.Cells[7].Value = ""; //No pasa nada con el Cajero 1
+
+                            fila.Cells[17].Value = "Ocupado";
+                            fila.Cells[18].Value = 0.ToString();
+
+                            fila.Cells[13].Value = filaAnterior.Cells[13].Value.ToString(); //Cajero 1 como estaba
+                            fila.Cells[14].Value = filaAnterior.Cells[14].Value.ToString();
+                        }
+                        if (Convert.ToString(filaAnterior.Cells[13].Value) == "Ocupado" && Convert.ToString(filaAnterior.Cells[17].Value) == "Ocupado")
+                        {
+                            fila.Cells[7].Value = ""; //No pasa nada con los Random fin de atencion porque no se genera fin de atención
+                            fila.Cells[10].Value = "";
+
+                            fila.Cells[13].Value = "Ocupado"; //Se mantienen ocupados los Cajeros
+                            fila.Cells[17].Value = "Ocupado";
+
+                            cola1 = Convert.ToInt16(filaAnterior.Cells[14].Value.ToString());
+                            cola2 = Convert.ToInt16(filaAnterior.Cells[18].Value.ToString());
+                            if (aQueColaVa(cola1, cola2, Convert.ToDecimal(fila.Cells[5].Value)) == 1)
+                            {
+                                fila.Cells[14].Value = incrementarCola(cola1).ToString();//va al Cajero 1, incrementa cola
+                                fila.Cells[6].Value = "Cajero1";
+                                fila.Cells[18].Value = filaAnterior.Cells[18].Value.ToString(); //Cola del Cajero 2 como estaba
+
+                            }
+                            else
+                            {
+                                fila.Cells[18].Value = incrementarCola(cola2).ToString(); //va al Cajero 2, incrementa cola
+                                fila.Cells[6].Value = "Cajero2";
+                                fila.Cells[14].Value = filaAnterior.Cells[14].Value.ToString(); //Cola del Cajero 1 como estaba
+                            }
+                        }                      
                     }
                     else
                     {
                         if (pintar == valor2)
                         {
-                            cola1 = Convert.ToInt16(filaAnterior.Cells[12].Value.ToString()); //mira las colas de la fila anterior
-                            cola2 = Convert.ToInt16(filaAnterior.Cells[16].Value.ToString());
+                            cola1 = Convert.ToInt16(filaAnterior.Cells[14].Value.ToString()); //mira las colas de la fila anterior
+                            cola2 = Convert.ToInt16(filaAnterior.Cells[18].Value.ToString());
                             if (hayClientesEnCola(cola1))
                             {
                                 //randomFinAtencionCajero1 = guardarRandom(); 
-                                fila.Cells[5].Value = guardarRandom().ToString(); //Genero Rnd para Cajero 1 porque hay gente en la cola
-                                fila.Cells[8].Value = ""; //No pasa nada con el Rnd del Cajero 2
+                                fila.Cells[7].Value = guardarRandom2().ToString(); //Genero Rnd para Cajero 1 porque hay gente en la cola
+                                fila.Cells[10].Value = ""; //No pasa nada con el Rnd del Cajero 2
 
-                                fila.Cells[11].Value = "Ocupado"; //Sigue ocupado el Cajero 1 pero con nuevo cliente que seguia en la cola
-                                fila.Cells[12].Value = decrementarCola(cola1).ToString(); //decremento cola
+                                fila.Cells[13].Value = "Ocupado"; //Sigue ocupado el Cajero 1 pero con nuevo cliente que seguia en la cola
+                                fila.Cells[14].Value = decrementarCola(cola1).ToString(); //decremento cola
 
-                                fila.Cells[15].Value = filaAnterior.Cells[15].Value.ToString(); //Estado y Cola del cajero 2 como estaban
-                                fila.Cells[16].Value = cola2.ToString();
+                                fila.Cells[17].Value = filaAnterior.Cells[17].Value.ToString(); //Estado y Cola del cajero 2 como estaban
+                                fila.Cells[18].Value = cola2.ToString();
                             }
                             else
                             {
-                                fila.Cells[5].Value = ""; //No pasa nada con los Randoms fin atencion
-                                fila.Cells[8].Value = "";
+                                fila.Cells[7].Value = ""; //No pasa nada con los Randoms fin atencion
+                                fila.Cells[10].Value = "";
 
-                                fila.Cells[11].Value = "Libre"; //Se libera el Cajero 1
-                                fila.Cells[12].Value = 0.ToString();
+                                fila.Cells[13].Value = "Libre"; //Se libera el Cajero 1
+                                fila.Cells[14].Value = 0.ToString();
 
-                                fila.Cells[15].Value = filaAnterior.Cells[15].Value.ToString(); //Estado y Cola del cajero 2 como estaban
-                                fila.Cells[16].Value = cola2.ToString();
+                                fila.Cells[17].Value = filaAnterior.Cells[17].Value.ToString(); //Estado y Cola del cajero 2 como estaban
+                                fila.Cells[18].Value = cola2.ToString();
                             }
                         }
                         else //Fin atención Cajero 2
                         {
-                            cola1 = Convert.ToInt16(filaAnterior.Cells[12].Value.ToString()); //miro las colas de la fila anterior
-                            cola2 = Convert.ToInt16(filaAnterior.Cells[16].Value.ToString());
+                            cola1 = Convert.ToInt16(filaAnterior.Cells[14].Value.ToString()); //miro las colas de la fila anterior
+                            cola2 = Convert.ToInt16(filaAnterior.Cells[18].Value.ToString());
                             if (hayClientesEnCola(cola2))
                             {
-                                
-                                fila.Cells[5].Value = "";//No pasa nada con el Rnd del Cajero 1
-                                fila.Cells[8].Value = guardarRandom().ToString();//Genero Rnd para Cajero 2 porque hay gente en la cola
 
-                                fila.Cells[11].Value = filaAnterior.Cells[11].Value.ToString(); //Cajero 1 como estaba
-                                fila.Cells[12].Value = cola1.ToString();
+                                fila.Cells[7].Value = "";//No pasa nada con el Rnd del Cajero 1
+                                fila.Cells[10].Value = guardarRandom3().ToString();//Genero Rnd para Cajero 2 porque hay gente en la cola
 
-                                fila.Cells[15].Value = "Ocupado"; //Sigue ocupado, pero con otro cliente
-                                fila.Cells[16].Value = decrementarCola(cola2).ToString();
+                                fila.Cells[13].Value = filaAnterior.Cells[13].Value.ToString(); //Cajero 1 como estaba
+                                fila.Cells[14].Value = cola1.ToString();
+
+                                fila.Cells[17].Value = "Ocupado"; //Sigue ocupado, pero con otro cliente
+                                fila.Cells[18].Value = decrementarCola(cola2).ToString();
                             }
                             else //No quedan clientes en la cola del Cajero 2
                             {
-                                fila.Cells[5].Value = ""; //No pasa nada con los Randoms fin atencion
-                                fila.Cells[8].Value = "";
+                                fila.Cells[7].Value = ""; //No pasa nada con los Randoms fin atencion
+                                fila.Cells[10].Value = "";
 
-                                fila.Cells[11].Value = filaAnterior.Cells[11].Value.ToString(); //Estado y Cola del Cajero 1 como estaban
-                                fila.Cells[12].Value = cola1.ToString();
+                                fila.Cells[13].Value = filaAnterior.Cells[13].Value.ToString(); //Estado y Cola del Cajero 1 como estaban
+                                fila.Cells[14].Value = cola1.ToString();
 
-                                fila.Cells[15].Value = "Libre"; //Se libera el cajero 2
-                                fila.Cells[16].Value = 0.ToString();
+                                fila.Cells[17].Value = "Libre"; //Se libera el cajero 2
+                                fila.Cells[18].Value = 0.ToString();
                             }
                         }
                     }
@@ -542,61 +587,61 @@ namespace Banco
 
                     //Tiempo Atención Cajero 1
 
-                    if (fila.Cells[5].Value.ToString() == "")
+                    if (fila.Cells[7].Value.ToString() == "")
                     {
-                        fila.Cells[6].Value = "";
+                        fila.Cells[8].Value = "";
                     }
                     else
                     {
-                        fila.Cells[6].Value = (tiempoCajero1(double.Parse(txtBoxMedia.Text, CultureInfo.CreateSpecificCulture("en-US")), Convert.ToDouble(fila.Cells[5].Value))).ToString();
+                        fila.Cells[8].Value = (tiempoCajero1(double.Parse(txtBoxMedia.Text, CultureInfo.CreateSpecificCulture("en-US")), Convert.ToDouble(fila.Cells[7].Value))).ToString();
                     }
 
                     //Fin Atención Cajero 1
-                    if ((fila.Cells[5].Value).ToString() == "")
+                    if ((fila.Cells[7].Value).ToString() == "")
                     {
                         if (pintar == valor1 || pintar == valor3)
                         {
-                            fila.Cells[7].Value = filaAnterior.Cells[7].Value.ToString();
+                            fila.Cells[9].Value = filaAnterior.Cells[9].Value.ToString();
                         }
                         else
                         {
-                            fila.Cells[7].Value = "";
+                            fila.Cells[9].Value = "";
                         }
                     }
                     else
                     {
-                        fila.Cells[7].Value = (Convert.ToDouble(fila.Cells[0].Value) + Convert.ToDouble(fila.Cells[6].Value)).ToString();
+                        fila.Cells[9].Value = (Convert.ToDouble(fila.Cells[0].Value) + Convert.ToDouble(fila.Cells[8].Value)).ToString();
                     }
 
                     //RND Atención Cajero 2
                     //Controlado más arriba
 
                     //Tiempo Atención Cajero 2
-                    if (fila.Cells[8].Value.ToString() == "")
+                    if (fila.Cells[10].Value.ToString() == "")
                     {
-                        fila.Cells[9].Value = "";
+                        fila.Cells[11].Value = "";
 
                     }
                     else
                     {
-                        fila.Cells[9].Value = (tiempoCajero2(double.Parse(txtBoxA.Text, CultureInfo.CreateSpecificCulture("en-US")), double.Parse(txtBoxB.Text, CultureInfo.CreateSpecificCulture("en-US")), Convert.ToDouble(fila.Cells[8].Value))).ToString();
+                        fila.Cells[11].Value = (tiempoCajero2(double.Parse(txtBoxA.Text, CultureInfo.CreateSpecificCulture("en-US")), double.Parse(txtBoxB.Text, CultureInfo.CreateSpecificCulture("en-US")), Convert.ToDouble(fila.Cells[10].Value))).ToString();
                     }
 
                     //Fin Atención Cajero 2
-                    if (fila.Cells[8].Value.ToString() == "")
+                    if (fila.Cells[10].Value.ToString() == "")
                     {
                         if (pintar == valor1 || pintar == valor2)
                         {
-                            fila.Cells[10].Value = filaAnterior.Cells[10].Value.ToString();
+                            fila.Cells[12].Value = filaAnterior.Cells[12].Value.ToString();
                         }
                         else
                         {
-                            fila.Cells[10].Value = "";
+                            fila.Cells[12].Value = "";
                         }
                     }
                     else
                     {
-                        fila.Cells[10].Value = (Convert.ToDouble(fila.Cells[0].Value) + Convert.ToDouble(fila.Cells[9].Value)).ToString();
+                        fila.Cells[12].Value = (Convert.ToDouble(fila.Cells[0].Value) + Convert.ToDouble(fila.Cells[11].Value)).ToString();
                     }
 
                     //Estado Cajero 1
@@ -609,15 +654,15 @@ namespace Banco
                     //Contador Clientes con espera finalizada Cajero 1
                     if (pintar == valor2)
                     {
-                        fila.Cells[13].Value = (contadorClientes(Convert.ToInt16(filaAnterior.Cells[13].Value))).ToString();
+                        fila.Cells[15].Value = (contadorClientes(Convert.ToInt16(filaAnterior.Cells[15].Value))).ToString();
                     }
                     else
                     {
-                        fila.Cells[13].Value = filaAnterior.Cells[13].Value.ToString();
+                        fila.Cells[15].Value = filaAnterior.Cells[15].Value.ToString();
                     }
 
                     //Acumulador tiempo ocioso Cajero 1
-                    fila.Cells[14].Value = (acumuladorOcio(Convert.ToString(filaAnterior.Cells[11].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[14].Value))).ToString();
+                    fila.Cells[16].Value = (acumuladorOcio(Convert.ToString(filaAnterior.Cells[13].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[16].Value))).ToString();
 
                     //Estado Cajero 2
                     //ya controlado más arriba
@@ -628,21 +673,21 @@ namespace Banco
                     //Contador Clientes con espera finalizada Cajero 2
                     if (pintar == valor3)
                     {
-                        fila.Cells[17].Value = (contadorClientes(Convert.ToInt16(filaAnterior.Cells[17].Value))).ToString();
+                        fila.Cells[19].Value = (contadorClientes(Convert.ToInt16(filaAnterior.Cells[19].Value))).ToString();
                     }
                     else
                     {
-                        fila.Cells[17].Value = filaAnterior.Cells[17].Value.ToString();
+                        fila.Cells[19].Value = filaAnterior.Cells[19].Value.ToString();
                     }
 
                     //Acumulador tiempo ocioso Cajero 2
-                    fila.Cells[18].Value = (acumuladorOcio(Convert.ToString(filaAnterior.Cells[15].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[18].Value))).ToString();
+                    fila.Cells[20].Value = (acumuladorOcio(Convert.ToString(filaAnterior.Cells[17].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[20].Value))).ToString();
 
                     //Acumulador Tiempo clientes en el banco (tiempo en el sistema)
 
 
                     //Contador clientes con atención finalizada
-                    fila.Cells[20].Value = (Convert.ToInt16(fila.Cells[13].Value) + Convert.ToInt16(fila.Cells[17].Value)).ToString();
+                    fila.Cells[22].Value = (Convert.ToInt16(fila.Cells[15].Value) + Convert.ToInt16(fila.Cells[19].Value)).ToString();
 
                     //Que pasa con los clientes ante los distintos eventos
                     if (pintar == valor1)
@@ -674,7 +719,7 @@ namespace Banco
                         DataGridViewRow filaAuxiliar = new DataGridViewRow();
                         filaAuxiliar.CreateCells(dgv);
 
-                        double aVer = Convert.ToDouble(fila.Cells[0].Value);
+                        //double aVer = Convert.ToDouble(fila.Cells[0].Value);
                         int i = 0;
                         foreach (DataGridViewCell celda in fila.Cells)
                         {                           
@@ -695,10 +740,10 @@ namespace Banco
                             j++;
                         }
 
-                        double aVerAhora = Convert.ToDouble(fila.Cells[0].Value);
+                        //double aVerAhora = Convert.ToDouble(fila.Cells[0].Value);
 
                         //Seteo estado del nuevo cliente
-                        cliente.Estado = (estadoClienteQueLlega(Convert.ToString(filaAnterior.Cells[11].Value), Convert.ToString(filaAnterior.Cells[15]), Convert.ToInt16(filaAnterior.Cells[12].Value), Convert.ToInt16(filaAnterior.Cells[16].Value))).ToString();
+                        cliente.Estado = Convert.ToString(estadoClienteQueLlega(Convert.ToString(filaAnterior.Cells[13].Value), Convert.ToString(filaAnterior.Cells[17].Value), Convert.ToInt16(filaAnterior.Cells[14].Value), Convert.ToInt16(filaAnterior.Cells[18].Value), Convert.ToDecimal(fila.Cells[5].Value)));
                         //Seteo la celda
                         
                         fila.Cells[(dgv.Columns.Count - 2)].Value = cliente.Estado.ToString();
@@ -710,11 +755,10 @@ namespace Banco
                         fila.Cells[dgv.Columns.Count - 1].Value = (cliente.HoraLlegada).ToString();
 
                         //como el evento es de llegada, el acumulador de tiempos de clientes en sistema queda como estaba
-                        fila.Cells[19].Value = Convert.ToString(filaAnterior.Cells[19].Value);
+                        fila.Cells[21].Value = Convert.ToString(filaAnterior.Cells[21].Value);
 
                     }
-                    else
-                    {
+                    
                         if (pintar == valor2)
                         {
                             double i = 9999999999999999999; //Para controlar quién pasa a ser atendido de los que estan esperando
@@ -725,45 +769,44 @@ namespace Banco
                             {
                                                                
                                 if (Convert.ToString(celda.Value)=="SA1")
-                                //if (celda.Value.ToString().CompareTo("Siendo atendido por el Cajero 1")==0)                               
+                                                             
                                 {
                                     fila.Cells[celda.ColumnIndex].Value = "AF";
-                                    fila.Cells[19].Value = Convert.ToString(acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[19].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value)));
+                                    fila.Cells[21].Value = Convert.ToString(acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[21].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value)));
                                 }
                                 if (Convert.ToString(celda.Value) == "SA2")
                                 {
-                                    fila.Cells[celda.ColumnIndex].Value = celda.Value.ToString();
-                                    fila.Cells[celda.ColumnIndex + 1].Value = filaAnterior.Cells[celda.ColumnIndex + 1].Value.ToString();
+                                    fila.Cells[celda.ColumnIndex].Value = Convert.ToString(celda.Value);
+                                    fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
+                                    
                                 }
                                 if (Convert.ToString(celda.Value) == "EA1")
                                 {
                                     if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value) < i)
                                     {
                                         i = Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
-                                        indice = celda.ColumnIndex + 1;
+                                        indice = (celda.ColumnIndex + 1);
                                         //El cambio de estado lo tengo que hacer afuera del foreach, una verga
                                     }
                                     else
                                     {
                                         fila.Cells[celda.ColumnIndex].Value = "EA1";
-                                        fila.Cells[celda.ColumnIndex + 1].Value = filaAnterior.Cells[celda.ColumnIndex + 1].Value.ToString();
+                                        fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
                                     }
                                 }
                                 if (Convert.ToString(celda.Value) == "EA2")
                                 {
-                                    fila.Cells[celda.ColumnIndex].Value = celda.Value.ToString();
-                                    fila.Cells[celda.ColumnIndex + 1].Value = filaAnterior.Cells[celda.ColumnIndex + 1].Value.ToString();
+                                    fila.Cells[celda.ColumnIndex].Value = "EA2";
+                                    fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
                                 }
                             }
                             if (indice != -1)
                             {
                                 fila.Cells[indice - 1].Value = "SA1";
-                                fila.Cells[indice].Value = filaAnterior.Cells[indice].Value.ToString();
+                                fila.Cells[indice].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[indice].Value));
                             }
-
-
                         }
-                        else //que pasa con los clientes ante un fin atencion del cajero 2
+                        if (pintar==valor3) //que pasa con los clientes ante un fin atencion del cajero 2
                         {
                             double i = 9999999999999999999; //Para controlar quién pasa a ser atendido de los que estan esperando
                             int indice = -1;
@@ -773,40 +816,49 @@ namespace Banco
                                 if (Convert.ToString(celda.Value) == "SA2")
                                 {
                                     fila.Cells[celda.ColumnIndex].Value = "AF";
-                                    fila.Cells[19].Value = (acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[19].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value))).ToString();
+                                    fila.Cells[21].Value = Convert.ToString(acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[21].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value)));
                                 }
                                 if (Convert.ToString(celda.Value) == "SA1")
                                 {
-                                    fila.Cells[celda.ColumnIndex].Value = celda.Value.ToString();
-                                    fila.Cells[celda.ColumnIndex + 1].Value = filaAnterior.Cells[celda.ColumnIndex + 1].Value.ToString();
+                                    fila.Cells[celda.ColumnIndex].Value = "SA1";
+                                    fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
                                 }
                                 if (Convert.ToString(celda.Value) == "EA2")
                                 {
                                     if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value) < i)
                                     {
                                         i = Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
-                                        indice = celda.ColumnIndex + 1;
+                                        indice = (celda.ColumnIndex + 1);
                                         //El cambio de estado lo tengo que hacer afuera del foreach, una verga
                                     }
                                     else
                                     {
                                         fila.Cells[celda.ColumnIndex].Value = "EA2";
-                                        fila.Cells[celda.ColumnIndex + 1].Value = filaAnterior.Cells[celda.ColumnIndex + 1].Value.ToString();
+                                        fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
                                     }
                                 }
                                 if (Convert.ToString(celda.Value) == "EA1")
                                 {
                                     fila.Cells[celda.ColumnIndex].Value = celda.Value.ToString();
-                                    fila.Cells[celda.ColumnIndex + 1].Value = filaAnterior.Cells[celda.ColumnIndex + 1].Value.ToString();
+                                    fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
                                 }
                             }
                             if (indice != -1)
                             {
                                 fila.Cells[indice - 1].Value = "SA2";
-                                fila.Cells[indice].Value = filaAnterior.Cells[indice].Value.ToString();
+                                fila.Cells[indice].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[indice].Value));
                             }
                         }
-                    }              
+                    
+                    if (muestroRandom(Convert.ToString(filaAnterior.Cells[13].Value), Convert.ToString(filaAnterior.Cells[17].Value), Convert.ToInt16(filaAnterior.Cells[14].Value), Convert.ToInt16(filaAnterior.Cells[18].Value)))
+                    {
+                        
+                    }
+                    else
+                    {
+                        fila.Cells[5].Value = "";
+                    }
+
                 }
 
                 //saco el botón de la cabecera de cada columna que permitía ordenar
@@ -814,6 +866,7 @@ namespace Banco
                 {
                     dgv.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
+
 
                 //Insertamos nueva fila efectivamente
                 dgv.Rows.Add(fila);
@@ -827,7 +880,7 @@ namespace Banco
                 {
                     variable1 = 9999999999999999999;
                 }
-                if (decimal.TryParse(Convert.ToString(dgv.Rows[dgv.Rows.Count - 1].Cells[7].Value), out variable2))
+                if (decimal.TryParse(Convert.ToString(dgv.Rows[dgv.Rows.Count - 1].Cells[9].Value), out variable2))
                 {
 
                 }
@@ -835,7 +888,7 @@ namespace Banco
                 {
                     variable2 = 9999999999999999999;
                 }
-                if (decimal.TryParse(Convert.ToString(dgv.Rows[dgv.Rows.Count - 1].Cells[10].Value), out variable3))
+                if (decimal.TryParse(Convert.ToString(dgv.Rows[dgv.Rows.Count - 1].Cells[12].Value), out variable3))
                 {
 
                 }
@@ -858,11 +911,11 @@ namespace Banco
             {
                 
                 
-                lblEstadisticaACajero1.Text = (Math.Round((((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[13].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value))) * 60), 3).ToString() + " " + "clientes/hora").ToString();
-                lblEstadisticaACajero2.Text = (Math.Round((((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[17].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value))) * 60), 3).ToString() + " " + "clientes/hora").ToString();
+                lblEstadisticaACajero1.Text = (Math.Round((((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[15].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value))) * 60), 3).ToString() + " " + "clientes/hora").ToString();
+                lblEstadisticaACajero2.Text = (Math.Round((((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[19].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value))) * 60), 3).ToString() + " " + "clientes/hora").ToString();
             }
 
-            if (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[20].Value)==0)
+            if (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[22].Value)==0)
             {
                 lblEstadisticaB.Text = (0.ToString() + " " + "minutos").ToString();
             }
@@ -872,25 +925,47 @@ namespace Banco
                 //lblEstadisticaB.Text = (Math.Round(((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[19].Value)) / (Convert.ToInt16(dgv.Rows[dgv.Rows.Count - 1].Cells[20].Value))), 3).ToString() + " " + "minutos").ToString();
             } 
             
-            lblEstadisticaCCajero1.Text = ((Math.Round(Convert.ToDouble(dgv.Rows[dgv.Rows.Count - 1].Cells[14].Value), 3).ToString()) + " " + "minutos").ToString();
-            lblEstadisticaCCajero2.Text = ((Math.Round(Convert.ToDouble(dgv.Rows[dgv.Rows.Count - 1].Cells[18].Value), 3).ToString()) + " " + "minutos").ToString();
+            lblEstadisticaCCajero1.Text = ((Math.Round(Convert.ToDouble(dgv.Rows[dgv.Rows.Count - 1].Cells[16].Value), 3).ToString()) + " " + "minutos").ToString();
+            lblEstadisticaCCajero2.Text = ((Math.Round(Convert.ToDouble(dgv.Rows[dgv.Rows.Count - 1].Cells[20].Value), 3).ToString()) + " " + "minutos").ToString();
 
             idCliente = 1;
 
         }
 
-        decimal guardarRandom()
+        static Random _Random = new Random();
+        decimal guardarRandom1()
         {
-            Random _Random = new Random();
+            //Random _Random = new Random();
             double rnd = _Random.NextDouble();
             decimal redondeado = (decimal)Math.Round(rnd, 3);
             return redondeado;
         }
-        //decimal guardarRandom()
-        //{
-        //    decimal rnd = elRandom();
-        //    return rnd;
-        //}
+        static Random _Random2 = new Random();
+        decimal guardarRandom2()
+        {
+            //Random _Random2 = new Random();
+            double rnd = _Random2.NextDouble();
+            decimal redondeado = (decimal)Math.Round(rnd, 3);
+            return redondeado;
+        }
+        static Random _Random3 = new Random();
+        decimal guardarRandom3()
+        {
+            //Random _Random3 = new Random();
+            double rnd = _Random3.NextDouble();
+            decimal redondeado = (decimal)Math.Round(rnd, 3);
+            return redondeado;
+        }
+
+        static Random _Random4 = new Random();
+        decimal rndMontecarlo()
+        {
+            //Random _Random4 = new Random();
+            double rnd = _Random4.NextDouble();
+            decimal redondeado = (decimal)Math.Round(rnd, 3);
+            montecarlo = redondeado;
+            return redondeado;
+        }
 
         decimal tiempoEntreLlegadas(int frecuencia, double rndLlegadas)
         {
@@ -940,15 +1015,30 @@ namespace Banco
             }
         }
 
-        int aQueColaVa(int colaCajero1, int colaCajero2)
+        int aQueColaVa(int colaCajero1, int colaCajero2, decimal rndMontecarlo)
         {
-            if (colaCajero1<=colaCajero2)
+            if (colaCajero1==colaCajero2)
             {
-                return 1;
+                if (rndMontecarlo<(decimal)0.5)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
+                
             }
             else
             {
-                return 2;
+                if (colaCajero1<colaCajero2)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
             }
         }
         int incrementarCola(int cola)
@@ -996,12 +1086,12 @@ namespace Banco
 
             return resultado;
         }
-        string estadoClienteQueLlega(string estadoAnteriorCajero1, string estadoAnteriorCajero2, int colaAnteriorCajero1, int colaAnteriorCajero2)
+        string estadoClienteQueLlega(string estadoAnteriorCajero1, string estadoAnteriorCajero2, int colaAnteriorCajero1, int colaAnteriorCajero2, decimal rndMontecarlo)
         {
-            string estadoCliente;
-            if (estadoAnteriorCajero1=="Libre" || estadoAnteriorCajero2=="Libre")
+            string estadoCliente="";
+            if (estadoAnteriorCajero1=="Libre" && estadoAnteriorCajero2=="Libre")
             {
-                if (estadoAnteriorCajero1=="Libre")
+                if (rndMontecarlo<(decimal)0.5)
                 {
                     estadoCliente = "SA1";
                 }
@@ -1010,9 +1100,18 @@ namespace Banco
                     estadoCliente = "SA2";
                 }
             }
-            else //los dos cajeros ocupados
+
+            if (estadoAnteriorCajero1 == "Libre" && estadoAnteriorCajero2 == "Ocupado")
             {
-                if (aQueColaVa(colaAnteriorCajero1,colaAnteriorCajero2)==1)
+                estadoCliente = "SA1";
+            }
+            if (estadoAnteriorCajero1 == "Ocupado" && estadoAnteriorCajero2 == "Libre")
+            {
+                estadoCliente = "SA2";
+            }
+            if (estadoAnteriorCajero1 == "Ocupado" && estadoAnteriorCajero2 == "Ocupado")
+            {
+                if (aQueColaVa(colaAnteriorCajero1,colaAnteriorCajero2, rndMontecarlo)==1)
                 {
                     estadoCliente = "EA1";
                 }
@@ -1048,6 +1147,39 @@ namespace Banco
                 else
                 {
                     return finAtencionCajero2;
+                }
+            }
+        }
+
+        string aDonde(decimal rndMontecarlo)
+        {
+            string cadena;
+
+            if (rndMontecarlo < (decimal)0.5)
+            {
+                cadena = "Cajero1";
+            }
+            else
+            {
+                cadena = "Cajero2";
+            }
+            return cadena;
+        }
+        bool muestroRandom(string estadoAnteriorCajero1, string estadoAnteriorCajero2, int colaAnteriorCajero1, int colaAnteriorCajero2)
+        {        
+            if (estadoAnteriorCajero1=="Libre" && estadoAnteriorCajero2=="Libre")
+            {
+                return true;
+            }
+            else
+            {
+                if ((estadoAnteriorCajero1 == "Ocupado" && estadoAnteriorCajero2 == "Ocupado") && (colaAnteriorCajero1==colaAnteriorCajero2))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
