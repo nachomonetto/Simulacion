@@ -297,10 +297,10 @@
             this.acumuladorTiempoOciosoCajero2,
             this.acumuladorTiempoClienteEnSistema,
             this.contadorClientesConFinAtencion});
-            this.dgv.Location = new System.Drawing.Point(12, 433);
+            this.dgv.Location = new System.Drawing.Point(12, 407);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
-            this.dgv.Size = new System.Drawing.Size(1343, 150);
+            this.dgv.Size = new System.Drawing.Size(1343, 260);
             this.dgv.TabIndex = 20;
             // 
             // reloj
@@ -559,7 +559,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 487);
+            this.ClientSize = new System.Drawing.Size(1370, 700);
             this.Controls.Add(this.lblEstadisticaCCajero2);
             this.Controls.Add(this.lblEstadisticaCCajero1);
             this.Controls.Add(this.asda);

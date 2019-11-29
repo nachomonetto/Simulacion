@@ -215,12 +215,14 @@ namespace Banco
             double tiempoAIterar = float.Parse(txtBoxSimular.Text, CultureInfo.CreateSpecificCulture("en-US"));
             dgv.Visible = true;
             dgv.Rows.Clear();
+           
             this.dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             dgv.AutoResizeColumns();
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgv.AllowUserToAddRows = false;
             dgv.MultiSelect = false;
             dgv.ReadOnly = true;
+            
 
             do
             {
@@ -645,14 +647,14 @@ namespace Banco
                     //Que pasa con los clientes ante los distintos eventos
                     if (pintar == valor1)
                     {
-                        if (Convert.ToInt16(filaAnterior.Cells[0].Value) == 0)
+                        if (Convert.ToDouble(filaAnterior.Cells[0].Value) == 0)
                         {
 
                         }
                         else
                         {
-                            fila.Cells[dgv.Columns.Count - 2].Value = filaAnterior.Cells[dgv.Columns.Count - 2].Value.ToString();
-                            fila.Cells[dgv.Columns.Count - 1].Value = filaAnterior.Cells[dgv.Columns.Count - 1].Value.ToString();
+                            fila.Cells[dgv.Columns.Count - 2].Value = Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 2].Value);
+                            fila.Cells[dgv.Columns.Count - 1].Value = Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 1].Value);
                         }
 
                         Cliente cliente = new Cliente();
@@ -661,26 +663,54 @@ namespace Banco
                         //Creo columna de estado del nuevo cliente
                         DataGridViewColumn columna1 = new DataGridViewColumn();
                         columna1.HeaderText = ("Estado cliente " + cliente.Id.ToString()).ToString();
+                        columna1.Name= ("Estado cliente " + cliente.Id.ToString()).ToString();
+                        columna1.CellTemplate = new DataGridViewTextBoxCell();                      
                         //Creo columna hora de llegada del nuevo cliente
                         DataGridViewColumn columna2 = new DataGridViewColumn();
                         columna2.HeaderText = ("Hora de llegada cliente " + cliente.Id.ToString()).ToString();
-                        //Agrego columnas efectivamente
-                        dgv.Columns.Add(columna1);
+                        columna2.Name= ("Hora de llegada cliente " + cliente.Id.ToString()).ToString();
+                        columna2.CellTemplate = new DataGridViewTextBoxCell();
+
+                        DataGridViewRow filaAuxiliar = new DataGridViewRow();
+                        filaAuxiliar.CreateCells(dgv);
+
+                        double aVer = Convert.ToDouble(fila.Cells[0].Value);
+                        int i = 0;
+                        foreach (DataGridViewCell celda in fila.Cells)
+                        {                           
+                            filaAuxiliar.Cells[i].Value = Convert.ToString(celda.Value);
+                            i++;
+                        }
+
+                        
+
+                        dgv.Columns.Add(columna1);                                                                 
                         dgv.Columns.Add(columna2);
 
+                        fila.CreateCells(dgv);
+                        int j=0;
+                        foreach (DataGridViewCell celda in filaAuxiliar.Cells)
+                        {
+                            fila.Cells[j].Value = Convert.ToString(celda.Value);
+                            j++;
+                        }
+
+                        double aVerAhora = Convert.ToDouble(fila.Cells[0].Value);
 
                         //Seteo estado del nuevo cliente
-                        cliente.Estado = (estadoClienteQueLlega(Convert.ToString(filaAnterior.Cells[11].Value), Convert.ToString(filaAnterior.Cells[15]), Convert.ToInt16(filaAnterior.Cells[12].Value), Convert.ToInt16(filaAnterior.Cells[16]))).ToString();
+                        cliente.Estado = (estadoClienteQueLlega(Convert.ToString(filaAnterior.Cells[11].Value), Convert.ToString(filaAnterior.Cells[15]), Convert.ToInt16(filaAnterior.Cells[12].Value), Convert.ToInt16(filaAnterior.Cells[16].Value))).ToString();
                         //Seteo la celda
-                        fila.Cells[dgv.Columns.Count - 2].Value = cliente.Estado.ToString();
+                        
+                        fila.Cells[(dgv.Columns.Count - 2)].Value = cliente.Estado.ToString();
 
                         //Seteo hora de llegada del nuevo cliente
+
                         cliente.HoraLlegada = Convert.ToDouble(fila.Cells[0].Value);
                         //Seteo la celda
                         fila.Cells[dgv.Columns.Count - 1].Value = (cliente.HoraLlegada).ToString();
 
                         //como el evento es de llegada, el acumulador de tiempos de clientes en sistema queda como estaba
-                        fila.Cells[19].Value = (filaAnterior.Cells[19].Value).ToString();
+                        fila.Cells[19].Value = Convert.ToString(filaAnterior.Cells[19].Value);
 
                     }
                     else
@@ -698,7 +728,7 @@ namespace Banco
                                 //if (celda.Value.ToString().CompareTo("Siendo atendido por el Cajero 1")==0)                               
                                 {
                                     fila.Cells[celda.ColumnIndex].Value = "AF";
-                                    fila.Cells[19].Value = (acumuladorTiempoEnSistema(Convert.ToDecimal(filaAnterior.Cells[19].Value), Convert.ToDecimal(fila.Cells[0].Value), Convert.ToDecimal(filaAnterior.Cells[celda.ColumnIndex + 1].Value))).ToString();
+                                    fila.Cells[19].Value = Convert.ToString(acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[19].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value)));
                                 }
                                 if (Convert.ToString(celda.Value) == "SA2")
                                 {
@@ -709,7 +739,7 @@ namespace Banco
                                 {
                                     if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value) < i)
                                     {
-                                        i = Convert.ToInt16(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                                        i = Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
                                         indice = celda.ColumnIndex + 1;
                                         //El cambio de estado lo tengo que hacer afuera del foreach, una verga
                                     }
@@ -743,7 +773,7 @@ namespace Banco
                                 if (Convert.ToString(celda.Value) == "SA2")
                                 {
                                     fila.Cells[celda.ColumnIndex].Value = "AF";
-                                    fila.Cells[19].Value = (acumuladorTiempoEnSistema(Convert.ToDecimal(filaAnterior.Cells[19].Value), Convert.ToDecimal(fila.Cells[0].Value), Convert.ToDecimal(filaAnterior.Cells[celda.ColumnIndex + 1].Value))).ToString();
+                                    fila.Cells[19].Value = (acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[19].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value))).ToString();
                                 }
                                 if (Convert.ToString(celda.Value) == "SA1")
                                 {
@@ -754,7 +784,7 @@ namespace Banco
                                 {
                                     if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value) < i)
                                     {
-                                        i = Convert.ToInt16(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                                        i = Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
                                         indice = celda.ColumnIndex + 1;
                                         //El cambio de estado lo tengo que hacer afuera del foreach, una verga
                                     }
@@ -815,7 +845,7 @@ namespace Banco
                 }
 
                 comparar = controlReloj(variable1, variable2, variable3);
-
+                dgv.Refresh(); //vamo a ver q onda estoooooooooooooooooooooooooooooo
             } while ((double)comparar<tiempoAIterar);
 
             //Estadisticas
@@ -826,8 +856,10 @@ namespace Banco
             }
             else
             {
-                lblEstadisticaACajero1.Text = ((((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[13].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value))) * 60).ToString() + " " + "clientes/hora").ToString();
-                lblEstadisticaACajero2.Text = ((((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[17].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value))) * 60).ToString() + " " + "clientes/hora").ToString();
+                
+                
+                lblEstadisticaACajero1.Text = (Math.Round((((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[13].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value))) * 60), 3).ToString() + " " + "clientes/hora").ToString();
+                lblEstadisticaACajero2.Text = (Math.Round((((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[17].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value))) * 60), 3).ToString() + " " + "clientes/hora").ToString();
             }
 
             if (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[20].Value)==0)
@@ -836,28 +868,29 @@ namespace Banco
             }
             else
             {
-                lblEstadisticaB.Text = (((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[19].Value)) / (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[20].Value))).ToString() + " " + "minutos").ToString();
+                //decimal redondeado = (decimal)Math.Round(rnd, 3);
+                //lblEstadisticaB.Text = (Math.Round(((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[19].Value)) / (Convert.ToInt16(dgv.Rows[dgv.Rows.Count - 1].Cells[20].Value))), 3).ToString() + " " + "minutos").ToString();
             } 
             
-            lblEstadisticaCCajero1.Text = ((dgv.Rows[dgv.Rows.Count - 1].Cells[14].Value.ToString()) + " " + "minutos").ToString();
-            lblEstadisticaCCajero2.Text = ((dgv.Rows[dgv.Rows.Count - 1].Cells[18].Value.ToString()) + " " + "minutos").ToString();
+            lblEstadisticaCCajero1.Text = ((Math.Round(Convert.ToDouble(dgv.Rows[dgv.Rows.Count - 1].Cells[14].Value), 3).ToString()) + " " + "minutos").ToString();
+            lblEstadisticaCCajero2.Text = ((Math.Round(Convert.ToDouble(dgv.Rows[dgv.Rows.Count - 1].Cells[18].Value), 3).ToString()) + " " + "minutos").ToString();
 
             idCliente = 1;
 
         }
 
-        decimal elRandom()
+        decimal guardarRandom()
         {
             Random _Random = new Random();
             double rnd = _Random.NextDouble();
             decimal redondeado = (decimal)Math.Round(rnd, 3);
             return redondeado;
         }
-        decimal guardarRandom()
-        {
-            decimal rnd = elRandom();
-            return rnd;
-        }
+        //decimal guardarRandom()
+        //{
+        //    decimal rnd = elRandom();
+        //    return rnd;
+        //}
 
         decimal tiempoEntreLlegadas(int frecuencia, double rndLlegadas)
         {
@@ -992,10 +1025,10 @@ namespace Banco
             return estadoCliente;
         }
 
-        decimal acumuladorTiempoEnSistema(decimal acumuladorAnterior, decimal reloj, decimal horaLlegada)
+        decimal acumuladorTiempoEnSistema(double acumuladorAnterior, double reloj, double horaLlegada)
         {
             decimal resultado;
-            resultado = acumuladorAnterior + (reloj - horaLlegada);
+            resultado = (decimal)(acumuladorAnterior + (reloj - horaLlegada));
             return resultado;
         }
 
