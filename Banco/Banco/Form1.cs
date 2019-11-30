@@ -245,7 +245,7 @@ namespace Banco
                 if (dgv.Rows.Count == 0) //Evento de Inicio !!!
                 {
                     //Reloj
-                    fila.Cells[0].Value = 0;
+                    fila.Cells[0].Value = 0.ToString();
 
                     //Evento
                     fila.Cells[1].Value = "Inicio";
@@ -445,7 +445,7 @@ namespace Banco
                         if (Convert.ToString(filaAnterior.Cells[13].Value) == "Libre" && Convert.ToString(filaAnterior.Cells[17].Value) == "Libre")
                         {
 
-                            if (rndMontecarlo() < (decimal)0.5)
+                            if (Convert.ToDecimal(fila.Cells[5].Value) < (decimal)0.5)
                             {
                                 fila.Cells[7].Value = guardarRandom2().ToString(); //Va al Cajero 1 porque el rndMontecarlo es menor a 0.5
                                 fila.Cells[6].Value = "Cajero1";
@@ -698,8 +698,16 @@ namespace Banco
                         }
                         else
                         {
-                            fila.Cells[dgv.Columns.Count - 2].Value = Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 2].Value);
-                            fila.Cells[dgv.Columns.Count - 1].Value = Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 1].Value);
+                            if (Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 2].Value)=="AF")
+                            {
+
+                            }
+                            else
+                            {
+                                fila.Cells[dgv.Columns.Count - 2].Value = Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 2].Value);
+                                fila.Cells[dgv.Columns.Count - 1].Value = Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 1].Value);
+                            }
+                           
                         }
 
                         Cliente cliente = new Cliente();
@@ -755,100 +763,120 @@ namespace Banco
                         fila.Cells[dgv.Columns.Count - 1].Value = (cliente.HoraLlegada).ToString();
 
                         //como el evento es de llegada, el acumulador de tiempos de clientes en sistema queda como estaba
-                        fila.Cells[21].Value = Convert.ToString(filaAnterior.Cells[21].Value);
+                        fila.Cells[21].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[21].Value));
 
                     }
                     
                         if (pintar == valor2)
+                        {                          
+                        //Actualizo el estado de los clientes con estado SA1
+                        foreach (DataGridViewCell celda in filaAnterior.Cells)
                         {
-                            double i = 9999999999999999999; //Para controlar quién pasa a ser atendido de los que estan esperando
-                            int indice = -1;                          
-
-                            //Actualizo el estado de cada cliente
-                            foreach (DataGridViewCell celda in filaAnterior.Cells)
+                            if (Convert.ToString(celda.Value) == "SA1")
                             {
-                                                               
-                                if (Convert.ToString(celda.Value)=="SA1")
-                                                             
+                                fila.Cells[celda.ColumnIndex].Value = "AF";
+                                fila.Cells[21].Value = Convert.ToString(acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[21].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value)));
+                                break;
+                            }
+                        }
+                        foreach (DataGridViewCell celda in filaAnterior.Cells)
+                        {
+                            if (Convert.ToString(celda.Value) == "SA2")
+                            {
+                                fila.Cells[celda.ColumnIndex].Value = Convert.ToString(celda.Value);
+                                fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
+                                break;
+                            }
+                        }
+                        double i = 9999999999999999999; //Para controlar quién pasa a ser atendido de los que estan esperando
+                        int indice = -1;
+                        foreach (DataGridViewCell celda in filaAnterior.Cells)
+                        {
+                            if (Convert.ToString(celda.Value) == "EA1")
+                            {
+                                if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value) < i)
                                 {
-                                    fila.Cells[celda.ColumnIndex].Value = "AF";
-                                    fila.Cells[21].Value = Convert.ToString(acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[21].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value)));
+                                    i = Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                                    indice = (celda.ColumnIndex + 1); //
+                                    //El cambio de estado lo tengo que hacer afuera del foreach, una verga
                                 }
-                                if (Convert.ToString(celda.Value) == "SA2")
+                                else
                                 {
-                                    fila.Cells[celda.ColumnIndex].Value = Convert.ToString(celda.Value);
+                                    fila.Cells[celda.ColumnIndex].Value = "EA1";
                                     fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
-                                    
                                 }
-                                if (Convert.ToString(celda.Value) == "EA1")
-                                {
-                                    if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value) < i)
-                                    {
-                                        i = Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
-                                        indice = (celda.ColumnIndex + 1);
-                                        //El cambio de estado lo tengo que hacer afuera del foreach, una verga
-                                    }
-                                    else
-                                    {
-                                        fila.Cells[celda.ColumnIndex].Value = "EA1";
-                                        fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
-                                    }
-                                }
+                            }
+                        }
+                        if (indice != -1)
+                        {
+                            fila.Cells[indice - 1].Value = "SA1";
+                            fila.Cells[indice].Value = i.ToString();
+                        }
+
+                        foreach (DataGridViewCell celda in filaAnterior.Cells)
+                            {                                                                                                                                                      
                                 if (Convert.ToString(celda.Value) == "EA2")
                                 {
                                     fila.Cells[celda.ColumnIndex].Value = "EA2";
                                     fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
                                 }
-                            }
-                            if (indice != -1)
-                            {
-                                fila.Cells[indice - 1].Value = "SA1";
-                                fila.Cells[indice].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[indice].Value));
-                            }
+                            }                            
                         }
                         if (pintar==valor3) //que pasa con los clientes ante un fin atencion del cajero 2
                         {
-                            double i = 9999999999999999999; //Para controlar quién pasa a ser atendido de los que estan esperando
-                            int indice = -1;
-                            //Actualizo el estado de cada cliente
-                            foreach (DataGridViewCell celda in filaAnterior.Cells)
+                        //Actualizo el estado de los clientes con estado SA2
+                        foreach (DataGridViewCell celda in filaAnterior.Cells)
+                        {
+                            if (Convert.ToString(celda.Value) == "SA2")
                             {
-                                if (Convert.ToString(celda.Value) == "SA2")
-                                {
-                                    fila.Cells[celda.ColumnIndex].Value = "AF";
-                                    fila.Cells[21].Value = Convert.ToString(acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[21].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value)));
-                                }
-                                if (Convert.ToString(celda.Value) == "SA1")
-                                {
-                                    fila.Cells[celda.ColumnIndex].Value = "SA1";
-                                    fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
-                                }
-                                if (Convert.ToString(celda.Value) == "EA2")
-                                {
-                                    if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value) < i)
-                                    {
-                                        i = Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
-                                        indice = (celda.ColumnIndex + 1);
-                                        //El cambio de estado lo tengo que hacer afuera del foreach, una verga
-                                    }
-                                    else
-                                    {
-                                        fila.Cells[celda.ColumnIndex].Value = "EA2";
-                                        fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
-                                    }
-                                }
-                                if (Convert.ToString(celda.Value) == "EA1")
-                                {
-                                    fila.Cells[celda.ColumnIndex].Value = celda.Value.ToString();
-                                    fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
-                                }
-                            }
-                            if (indice != -1)
-                            {
-                                fila.Cells[indice - 1].Value = "SA2";
-                                fila.Cells[indice].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[indice].Value));
+                                fila.Cells[celda.ColumnIndex].Value = "AF";
+                                fila.Cells[21].Value = Convert.ToString(acumuladorTiempoEnSistema(Convert.ToDouble(filaAnterior.Cells[21].Value), Convert.ToDouble(fila.Cells[0].Value), Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value)));
+                                break;
                             }
                         }
+                        foreach (DataGridViewCell celda in filaAnterior.Cells)
+                        {
+                            if (Convert.ToString(celda.Value) == "SA1")
+                            {
+                                fila.Cells[celda.ColumnIndex].Value = Convert.ToString(celda.Value);
+                                fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
+                                break;
+                            }
+                        }
+                        double i2 = 9999999999999999999; //Para controlar quién pasa a ser atendido de los que estan esperando
+                        int indice2 = -1;
+                        foreach (DataGridViewCell celda in filaAnterior.Cells)
+                        {
+                            if (Convert.ToString(celda.Value) == "EA2")
+                            {
+                                if (Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value) < i2)
+                                {
+                                    i2 = Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                                    indice2 = (celda.ColumnIndex + 1); //
+                                    //El cambio de estado lo tengo que hacer afuera del foreach, una verga
+                                }
+                                else
+                                {
+                                    fila.Cells[celda.ColumnIndex].Value = "EA2";
+                                    fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
+                                }
+                            }
+                        }
+                        if (indice2 != -1)
+                        {
+                            fila.Cells[indice2 - 1].Value = "SA2";
+                            fila.Cells[indice2].Value = i2.ToString();
+                        }
+
+                        foreach (DataGridViewCell celda in filaAnterior.Cells)
+                        {
+                            if (Convert.ToString(celda.Value) == "EA1")
+                            {
+                                fila.Cells[celda.ColumnIndex].Value = "EA1";
+                                fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[celda.ColumnIndex + 1].Value));
+                            }
+                        }
+                    }
                     
                     if (muestroRandom(Convert.ToString(filaAnterior.Cells[13].Value), Convert.ToString(filaAnterior.Cells[17].Value), Convert.ToInt16(filaAnterior.Cells[14].Value), Convert.ToInt16(filaAnterior.Cells[18].Value)))
                     {
@@ -940,30 +968,30 @@ namespace Banco
             decimal redondeado = (decimal)Math.Round(rnd, 3);
             return redondeado;
         }
-        static Random _Random2 = new Random();
+        
         decimal guardarRandom2()
         {
             //Random _Random2 = new Random();
-            double rnd = _Random2.NextDouble();
+            double rnd = _Random.NextDouble();
             decimal redondeado = (decimal)Math.Round(rnd, 3);
             return redondeado;
         }
-        static Random _Random3 = new Random();
+        
         decimal guardarRandom3()
         {
             //Random _Random3 = new Random();
-            double rnd = _Random3.NextDouble();
+            double rnd = _Random.NextDouble();
             decimal redondeado = (decimal)Math.Round(rnd, 3);
             return redondeado;
         }
 
-        static Random _Random4 = new Random();
+        
         decimal rndMontecarlo()
         {
             //Random _Random4 = new Random();
-            double rnd = _Random4.NextDouble();
+            double rnd = _Random.NextDouble();
             decimal redondeado = (decimal)Math.Round(rnd, 3);
-            montecarlo = redondeado;
+            
             return redondeado;
         }
 
