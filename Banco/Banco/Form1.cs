@@ -222,6 +222,10 @@ namespace Banco
         public decimal variable3;
         public decimal comparar;
         public decimal montecarlo;
+
+        public int eliminarClientes=0;
+        public int tirada = 0;
+
         private void btnSimular_Click(object sender, EventArgs e)
         {
             
@@ -235,8 +239,23 @@ namespace Banco
             dgv.AllowUserToAddRows = false;
             dgv.MultiSelect = false;
             dgv.ReadOnly = true;
-            
 
+            if (tirada != 0)
+            {
+                //elimino las columnas que se repiten
+                if (eliminarClientes != 0)
+                {
+                    for (int i2 = 23; i2 < (23 + (eliminarClientes*2)); i2++)
+                    {
+                        dgv.Columns.RemoveAt(23);
+                    }
+                }
+            }
+            eliminarClientes = 0;
+            tirada++;
+
+
+            //List<Cliente> losClientes = new List<Cliente>();
             do
             {
                 DataGridViewRow fila = new DataGridViewRow();
@@ -692,37 +711,73 @@ namespace Banco
                     //Que pasa con los clientes ante los distintos eventos
                     if (pintar == valor1)
                     {
-                        if (Convert.ToDouble(filaAnterior.Cells[0].Value) == 0)
+                        fila.Cells[21].Value = Convert.ToString(filaAnterior.Cells[21].Value);
+
+                        foreach (DataGridViewCell celda in filaAnterior.Cells) //Los que estaban en estado AF ya mueren ahí.
                         {
-
+                            if (Convert.ToString(celda.Value) == "AF")
+                            {
+                                fila.Cells[celda.ColumnIndex].Value = "";                              
+                                break;
+                            }
                         }
-                        else
+                        foreach (DataGridViewCell celda in filaAnterior.Cells) //Los que estaban en estado SA1 quedan igual, break porque solo uno va a haber en SA1
                         {
-                            if (Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 2].Value)=="AF")
+                            if (Convert.ToString(celda.Value) == "SA1")
                             {
-
+                                fila.Cells[celda.ColumnIndex].Value = "SA1";
+                                fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                                break;
                             }
-                            else
+                        }
+                        foreach (DataGridViewCell celda in filaAnterior.Cells) //Los que estaban en estado SA2 quedan igual, break porque solo uno va a haber en SA2
+                        {
+                            if (Convert.ToString(celda.Value) == "SA2")
                             {
-                                fila.Cells[dgv.Columns.Count - 2].Value = Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 2].Value);
-                                fila.Cells[dgv.Columns.Count - 1].Value = Convert.ToString(filaAnterior.Cells[dgv.Columns.Count - 1].Value);
+                                fila.Cells[celda.ColumnIndex].Value = "SA2";
+                                fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                                break;
                             }
-                           
+                        }
+                        foreach (DataGridViewCell celda in filaAnterior.Cells) //Los que estaban en estado EA1 quedan igual, no break porque puede haber más de 1 esperando
+                        {
+                            if (Convert.ToString(celda.Value) == "EA1")
+                            {
+                                fila.Cells[celda.ColumnIndex].Value = "EA1";
+                                fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                            }
+                        }
+                        foreach (DataGridViewCell celda in filaAnterior.Cells) //Los que estaban en estado EA2 quedan igual, no break porque puede haber más de 1 esperando
+                        {
+                            if (Convert.ToString(celda.Value) == "EA2")
+                            {
+                                fila.Cells[celda.ColumnIndex].Value = "EA2";
+                                fila.Cells[celda.ColumnIndex + 1].Value = Convert.ToString(filaAnterior.Cells[celda.ColumnIndex + 1].Value);
+                            }
                         }
 
+                        //Creo lista de objetos cliente                        
+
+
+                        
                         Cliente cliente = new Cliente();
+
+                        eliminarClientes++;
+
                         cliente.Id = idCliente;
                         idCliente = idCliente + 1;
                         //Creo columna de estado del nuevo cliente
                         DataGridViewColumn columna1 = new DataGridViewColumn();
                         columna1.HeaderText = ("Estado cliente " + cliente.Id.ToString()).ToString();
-                        columna1.Name= ("Estado cliente " + cliente.Id.ToString()).ToString();
+                        columna1.Name= ("Estadocliente" + cliente.Id.ToString()).ToString();
                         columna1.CellTemplate = new DataGridViewTextBoxCell();                      
                         //Creo columna hora de llegada del nuevo cliente
                         DataGridViewColumn columna2 = new DataGridViewColumn();
                         columna2.HeaderText = ("Hora de llegada cliente " + cliente.Id.ToString()).ToString();
-                        columna2.Name= ("Hora de llegada cliente " + cliente.Id.ToString()).ToString();
+                        columna2.Name= ("Horadellegadacliente" + cliente.Id.ToString()).ToString();
                         columna2.CellTemplate = new DataGridViewTextBoxCell();
+                        //Agergo cliente a la lista de Clientes
+                        
 
                         DataGridViewRow filaAuxiliar = new DataGridViewRow();
                         filaAuxiliar.CreateCells(dgv);
@@ -733,9 +788,7 @@ namespace Banco
                         {                           
                             filaAuxiliar.Cells[i].Value = Convert.ToString(celda.Value);
                             i++;
-                        }
-
-                        
+                        }                        
 
                         dgv.Columns.Add(columna1);                                                                 
                         dgv.Columns.Add(columna2);
@@ -761,10 +814,7 @@ namespace Banco
                         cliente.HoraLlegada = Convert.ToDouble(fila.Cells[0].Value);
                         //Seteo la celda
                         fila.Cells[dgv.Columns.Count - 1].Value = (cliente.HoraLlegada).ToString();
-
-                        //como el evento es de llegada, el acumulador de tiempos de clientes en sistema queda como estaba
-                        fila.Cells[21].Value = Convert.ToString(Convert.ToDouble(filaAnterior.Cells[21].Value));
-
+                        cliente = null;
                     }
                     
                         if (pintar == valor2)
@@ -929,6 +979,54 @@ namespace Banco
                 dgv.Refresh(); //vamo a ver q onda estoooooooooooooooooooooooooooooo
             } while ((double)comparar<tiempoAIterar);
 
+            
+
+            idCliente = 1;
+
+            
+
+            //seteo a null a todos los clientes
+            //foreach (Cliente unCliente in losClientes)
+            //{
+            //    unCliente.Id = null;
+            //}
+
+
+
+
+            //int numeroCliente = 1;
+            //int contadorColumnas =0;
+            //foreach (DataGridViewColumn columna in dgv.Columns)
+            //{              
+            //    if (columna.Name==Convert.ToString("Estadocliente" + numeroCliente))
+            //    {
+            //        contadorColumnas++;
+
+            //    }
+            //    if (contadorColumnas==2)
+            //    {
+            //        foreach (DataGridViewColumn columna2 in dgv.Columns)
+            //        {
+            //            if (columna2.Name == Convert.ToString("Estadocliente" + numeroCliente))
+            //            {
+            //                dgv.Columns.Remove(columna2);
+            //                break;
+            //            }                     
+            //        }
+            //        foreach (DataGridViewColumn columna2 in dgv.Columns)
+            //        {
+            //            if (columna2.Name == Convert.ToString("Horadellegadacliente" + numeroCliente))
+            //            {
+            //                dgv.Columns.Remove(columna2);
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    numeroCliente++;
+            //}
+
+            //dgv.Refresh();
+
             //Estadisticas
             if (Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[0].Value)==0) //Controlo division por 0
             {
@@ -950,17 +1048,21 @@ namespace Banco
             else
             {
                 //decimal redondeado = (decimal)Math.Round(rnd, 3);
-                //lblEstadisticaB.Text = (Math.Round(((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[19].Value)) / (Convert.ToInt16(dgv.Rows[dgv.Rows.Count - 1].Cells[20].Value))), 3).ToString() + " " + "minutos").ToString();
+                lblEstadisticaB.Text = (Math.Round(((Convert.ToDecimal(dgv.Rows[dgv.Rows.Count - 1].Cells[21].Value)) / (Convert.ToInt16(dgv.Rows[dgv.Rows.Count - 1].Cells[22].Value))), 3).ToString() + " " + "minutos").ToString();
             } 
             
             lblEstadisticaCCajero1.Text = ((Math.Round(Convert.ToDouble(dgv.Rows[dgv.Rows.Count - 1].Cells[16].Value), 3).ToString()) + " " + "minutos").ToString();
             lblEstadisticaCCajero2.Text = ((Math.Round(Convert.ToDouble(dgv.Rows[dgv.Rows.Count - 1].Cells[20].Value), 3).ToString()) + " " + "minutos").ToString();
 
-            idCliente = 1;
+            //idCliente = 1;
 
+            
         }
 
-        static Random _Random = new Random();
+       
+
+
+static Random _Random = new Random();
         decimal guardarRandom1()
         {
             //Random _Random = new Random();
