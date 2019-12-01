@@ -314,7 +314,7 @@
             this.dgv.Location = new System.Drawing.Point(12, 404);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
-            this.dgv.Size = new System.Drawing.Size(1343, 260);
+            this.dgv.Size = new System.Drawing.Size(1343, 284);
             this.dgv.TabIndex = 20;
             // 
             // reloj
