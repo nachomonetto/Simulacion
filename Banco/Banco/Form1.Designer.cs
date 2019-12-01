@@ -482,7 +482,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.label15.Location = new System.Drawing.Point(179, 237);
+            this.label15.Location = new System.Drawing.Point(60, 237);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(122, 25);
             this.label15.TabIndex = 21;
@@ -492,7 +492,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label16.Location = new System.Drawing.Point(184, 277);
+            this.label16.Location = new System.Drawing.Point(65, 277);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(283, 17);
             this.label16.TabIndex = 22;
@@ -502,7 +502,7 @@
             // 
             this.lblEstadisticaACajero1.AutoSize = true;
             this.lblEstadisticaACajero1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblEstadisticaACajero1.Location = new System.Drawing.Point(473, 277);
+            this.lblEstadisticaACajero1.Location = new System.Drawing.Point(354, 277);
             this.lblEstadisticaACajero1.Name = "lblEstadisticaACajero1";
             this.lblEstadisticaACajero1.Size = new System.Drawing.Size(0, 17);
             this.lblEstadisticaACajero1.TabIndex = 23;
@@ -511,7 +511,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label17.Location = new System.Drawing.Point(184, 294);
+            this.label17.Location = new System.Drawing.Point(65, 294);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(283, 17);
             this.label17.TabIndex = 24;
@@ -521,7 +521,7 @@
             // 
             this.lblEstadisticaACajero2.AutoSize = true;
             this.lblEstadisticaACajero2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblEstadisticaACajero2.Location = new System.Drawing.Point(473, 294);
+            this.lblEstadisticaACajero2.Location = new System.Drawing.Point(354, 294);
             this.lblEstadisticaACajero2.Name = "lblEstadisticaACajero2";
             this.lblEstadisticaACajero2.Size = new System.Drawing.Size(0, 17);
             this.lblEstadisticaACajero2.TabIndex = 25;
@@ -530,7 +530,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label18.Location = new System.Drawing.Point(184, 323);
+            this.label18.Location = new System.Drawing.Point(65, 323);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(285, 17);
             this.label18.TabIndex = 26;
@@ -540,7 +540,7 @@
             // 
             this.lblEstadisticaB.AutoSize = true;
             this.lblEstadisticaB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblEstadisticaB.Location = new System.Drawing.Point(473, 323);
+            this.lblEstadisticaB.Location = new System.Drawing.Point(354, 323);
             this.lblEstadisticaB.Name = "lblEstadisticaB";
             this.lblEstadisticaB.Size = new System.Drawing.Size(0, 17);
             this.lblEstadisticaB.TabIndex = 27;
@@ -549,7 +549,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label19.Location = new System.Drawing.Point(184, 354);
+            this.label19.Location = new System.Drawing.Point(65, 354);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(184, 17);
             this.label19.TabIndex = 28;
@@ -559,7 +559,7 @@
             // 
             this.asda.AutoSize = true;
             this.asda.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.asda.Location = new System.Drawing.Point(184, 371);
+            this.asda.Location = new System.Drawing.Point(65, 371);
             this.asda.Name = "asda";
             this.asda.Size = new System.Drawing.Size(184, 17);
             this.asda.TabIndex = 29;
@@ -569,7 +569,7 @@
             // 
             this.lblEstadisticaCCajero1.AutoSize = true;
             this.lblEstadisticaCCajero1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblEstadisticaCCajero1.Location = new System.Drawing.Point(363, 354);
+            this.lblEstadisticaCCajero1.Location = new System.Drawing.Point(244, 354);
             this.lblEstadisticaCCajero1.Name = "lblEstadisticaCCajero1";
             this.lblEstadisticaCCajero1.Size = new System.Drawing.Size(0, 17);
             this.lblEstadisticaCCajero1.TabIndex = 30;
@@ -578,7 +578,7 @@
             // 
             this.lblEstadisticaCCajero2.AutoSize = true;
             this.lblEstadisticaCCajero2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lblEstadisticaCCajero2.Location = new System.Drawing.Point(363, 371);
+            this.lblEstadisticaCCajero2.Location = new System.Drawing.Point(244, 371);
             this.lblEstadisticaCCajero2.Name = "lblEstadisticaCCajero2";
             this.lblEstadisticaCCajero2.Size = new System.Drawing.Size(0, 17);
             this.lblEstadisticaCCajero2.TabIndex = 31;
