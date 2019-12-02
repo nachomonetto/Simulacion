@@ -93,6 +93,8 @@
             this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.txtBoxDesde = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -256,15 +258,15 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(511, 193);
+            this.label14.Location = new System.Drawing.Point(538, 208);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(121, 13);
+            this.label14.Size = new System.Drawing.Size(86, 13);
             this.label14.TabIndex = 17;
-            this.label14.Text = "Simular hasta el minuto: ";
+            this.label14.Text = "Hasta el minuto: ";
             // 
             // txtBoxSimular
             // 
-            this.txtBoxSimular.Location = new System.Drawing.Point(627, 190);
+            this.txtBoxSimular.Location = new System.Drawing.Point(630, 205);
             this.txtBoxSimular.Name = "txtBoxSimular";
             this.txtBoxSimular.Size = new System.Drawing.Size(100, 20);
             this.txtBoxSimular.TabIndex = 18;
@@ -272,7 +274,7 @@
             // 
             // btnSimular
             // 
-            this.btnSimular.Location = new System.Drawing.Point(733, 188);
+            this.btnSimular.Location = new System.Drawing.Point(736, 188);
             this.btnSimular.Name = "btnSimular";
             this.btnSimular.Size = new System.Drawing.Size(75, 23);
             this.btnSimular.TabIndex = 19;
@@ -683,11 +685,30 @@
             this.label29.TabIndex = 41;
             this.label29.Text = "Si es menor a 0.5 se va al Cajero 1, sino al Cajero 2.";
             // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(447, 177);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(177, 13);
+            this.label30.TabIndex = 42;
+            this.label30.Text = "Mostrar simulación desde el minuto: ";
+            // 
+            // txtBoxDesde
+            // 
+            this.txtBoxDesde.Location = new System.Drawing.Point(630, 174);
+            this.txtBoxDesde.Name = "txtBoxDesde";
+            this.txtBoxDesde.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxDesde.TabIndex = 43;
+            this.txtBoxDesde.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxDesde_KeyPress);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 700);
+            this.Controls.Add(this.txtBoxDesde);
+            this.Controls.Add(this.label30);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.label27);
@@ -805,6 +826,8 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox txtBoxDesde;
     }
 }
 
